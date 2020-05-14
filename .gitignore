@@ -3,6 +3,17 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# My files Kremen
+*.o
+*.out
+*.a
+*.so
+*.swp
+/libft-unit-test/
+Makefile
+MyMakefile
+main.c
+
 # User-specific files
 *.rsuser
 *.suo
