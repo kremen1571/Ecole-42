@@ -19,6 +19,7 @@ static int		ft_indexstart(char *s1, char *set)
 	unsigned int	j;
 
 	i = 0;
+	indexstart = 0;
 	while (s1[i] != '\0')
 	{
 		j = 0;
@@ -45,6 +46,7 @@ static int		ft_indexend(char *s1, char *set)
 	int				indexend;
 
 	i = ft_strlen(s1) - 1;
+	indexend = 0;
 	while (s1[i] >= 0)
 	{
 		j = 0;

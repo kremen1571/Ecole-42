@@ -12,6 +12,18 @@
 
 #include "libft.h"
 
+static void	free_alloc(char **ptrnewstr, char *tempd,
+							int *tempindex, int *templength)
+{
+	if (ptrnewstr)
+		while (*ptrnewstr++)
+			free(*ptrnewstr);
+	free(ptrnewstr);
+	free(tempd);
+	free(tempindex);
+	free(templength);
+}
+
 static int	ft_countword(char c, char *tempd,
 							int *tempindex, int *templength)
 {
@@ -53,22 +65,26 @@ static char	**ft_split_static(char c, char *tempd,
 	countword = ft_countword(c, tempd, tempindex, templength);
 	ptrnewstr = (char **)malloc(sizeof(char *) * (countword + 1));
 	if (!ptrnewstr)
+	{
+		free_alloc(ptrnewstr, tempd, tempindex, templength);
 		return (NULL);
+	}
 	i = 0;
 	while (i < countword)
 	{
 		if (!(ptrnewstr[i] = ft_substr(tempd, tempindex[i], templength[i])))
+		{
+			free_alloc(ptrnewstr, tempd, tempindex, templength);
 			return (NULL);
+		}
 		i++;
 	}
-	ptrnewstr[i] = 0;
-	free(templength);
-	free(tempindex);
-	free(tempd);
+	ptrnewstr[i] = NULL;
+	free_alloc(NULL, tempd, tempindex, templength);
 	return (ptrnewstr);
 }
 
-static int	*ft_allocate_intzmass(char *tempd)
+static int	*ft_allocate_intmass(char *tempd)
 {
 	int	*temp;
 
@@ -85,22 +101,23 @@ char		**ft_split(char const *s, char c)
 	int		*templength;
 	int		*tempindex;
 
-	if (!s)
-		return (NULL);
-	if (s[0] == '\0' || c == 0)
+	if (s)
 	{
-		ptrnewstr = (char **)malloc(sizeof(char *) * 2);
-		if (!ptrnewstr)
-			return (NULL);
-		ptrnewstr[0] = ft_substr(s, 0, ft_strlen(s));
-		ptrnewstr[1] = 0;
-		return (ptrnewstr);
+		if (s[0] == '\0')
+		{
+			if (!(ptrnewstr = (char **)malloc(sizeof(char *) * 2)))
+				return (NULL);
+			ptrnewstr[0] = "'\0'";
+			ptrnewstr[1] = NULL;
+			return (ptrnewstr);
+		}
+		if ((tempd = ft_strtrim((char *)s, &c)))
+			if ((templength = ft_allocate_intmass(tempd)))
+				if ((tempindex = ft_allocate_intmass(tempd)))
+					if ((ptrnewstr = ft_split_static(c, tempd,
+						tempindex, templength)))
+						return (ptrnewstr);
 	}
-	tempd = ft_strtrim((char *)s, &c);
-	templength = ft_allocate_intzmass(tempd);
-	tempindex = ft_allocate_intzmass(tempd);
-	ptrnewstr = ft_split_static(c, tempd, tempindex, templength);
-	if (!ptrnewstr)
-		return (NULL);
-	return (ptrnewstr);
+	free_alloc(ptrnewstr, tempd, tempindex, templength);
+	return (NULL);
 }
