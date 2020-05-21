@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-int		ft_counter(unsigned x)
+static int		ft_counter(unsigned x)
 {
 	int	count;
 
@@ -25,7 +25,7 @@ int		ft_counter(unsigned x)
 	return (count);
 }
 
-void	ft_fillitoa(char *str, unsigned int x, int i)
+ static void	ft_fillitoa(char *str, unsigned int x, int i)
 {
 	char	c;
 
@@ -38,7 +38,7 @@ void	ft_fillitoa(char *str, unsigned int x, int i)
 	str[i] = c;
 }
 
-char	*ft_itoa(int n)
+char			*ft_itoa(int n)
 {
 	char			*str;
 	int				i;
