@@ -25,7 +25,7 @@ static int		ft_counter(unsigned x)
 	return (count);
 }
 
- static void	ft_fillitoa(char *str, unsigned int x, int i)
+static void		ft_fillitoa(char *str, unsigned int x, int i)
 {
 	char	c;
 
