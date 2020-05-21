@@ -43,11 +43,9 @@ char	*ft_itoa(int n)
 	char			*str;
 	int				i;
 	int				sign;
-	int				j;
 	unsigned int	x;
 
 	i = 0;
-	j = 0;
 	if (n <= 0)
 	{
 		x = n * (-1);

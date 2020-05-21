@@ -12,11 +12,11 @@
 
 #include "libft.h"
 
-int		ft_indexstart(char *s1, char *set)
+static int		ft_indexstart(char *s1, char *set)
 {
-	int	indexstart;
-	int	i;
-	int	j;
+	int				indexstart;
+	int				i;
+	unsigned int	j;
 
 	i = 0;
 	while (s1[i] != '\0')
@@ -38,11 +38,11 @@ int		ft_indexstart(char *s1, char *set)
 	return (indexstart);
 }
 
-int		ft_indexend(char *s1, char *set)
+static int		ft_indexend(char *s1, char *set)
 {
-	int	i;
-	int	j;
-	int	indexend;
+	int				i;
+	unsigned int	j;
+	int				indexend;
 
 	i = ft_strlen(s1) - 1;
 	while (s1[i] >= 0)
@@ -66,7 +66,7 @@ int		ft_indexend(char *s1, char *set)
 	return (indexend);
 }
 
-char	*ft_indexendiszero(void)
+static char		*ft_indexendiszero(void)
 {
 	char	*ptrnewstr;
 
@@ -75,7 +75,8 @@ char	*ft_indexendiszero(void)
 	return (ptrnewstr);
 }
 
-char	*ft_fill(char *ptrnewstr, char *s1, int lennewstr, int indexstart)
+static char		*ft_fill(char *ptrnewstr, char *s1,
+							int lennewstr, int indexstart)
 {
 	int	i;
 
@@ -90,15 +91,13 @@ char	*ft_fill(char *ptrnewstr, char *s1, int lennewstr, int indexstart)
 	return (ptrnewstr);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char			*ft_strtrim(char const *s1, char const *set)
 {
 	char	*ptrnewstr;
-	int		i;
 	int		indexstart;
 	int		indexend;
 	int		lennewstr;
 
-	i = 0;
 	if (!s1)
 		return (NULL);
 	if (!set || s1[0] == '\0')

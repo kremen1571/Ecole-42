@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/15 18:37:10 by klaronda          #+#    #+#             */
-/*   Updated: 2020/05/15 18:37:11 by klaronda         ###   ########.fr       */
+/*   Created: 2020/05/18 17:10:45 by klaronda          #+#    #+#             */
+/*   Updated: 2020/05/18 17:10:47 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1024);
-	return (0);
+	if (lst && new)
+	{
+		if (*lst)
+		{
+			(ft_lstlast(*lst))->next = new;
+		}
+		else
+			*lst = new;
+	}
 }

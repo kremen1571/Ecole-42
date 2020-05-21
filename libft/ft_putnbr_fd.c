@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/15 18:37:10 by klaronda          #+#    #+#             */
-/*   Updated: 2020/05/15 18:37:11 by klaronda         ###   ########.fr       */
+/*   Created: 2020/05/18 14:45:46 by klaronda          #+#    #+#             */
+/*   Updated: 2020/05/18 14:45:47 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1024);
-	return (0);
+	char			c;
+	unsigned int	x;
+
+	if (n < 0)
+	{
+		x = n * (-1);
+		write(fd, "-", 1);
+	}
+	else
+		x = n;
+	if (x / 10 > 0)
+		ft_putnbr_fd(x / 10, fd);
+	c = x % 10 + '0';
+	write(fd, &c, 1);
 }

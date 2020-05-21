@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/15 18:37:10 by klaronda          #+#    #+#             */
-/*   Updated: 2020/05/15 18:37:11 by klaronda         ###   ########.fr       */
+/*   Created: 2020/05/18 16:52:53 by klaronda          #+#    #+#             */
+/*   Updated: 2020/05/18 16:52:54 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+int	ft_lstsize(t_list *lst)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1024);
+	int	count;
+
+	count = 0;
+	if (lst)
+	{
+		while (lst)
+		{
+			lst = lst->next;
+			count++;
+		}
+		return (count);
+	}
 	return (0);
 }
