@@ -12,19 +12,26 @@
 
 #include "libft.h"
 
-static void	free_alloc(char **ptrnewstr, char *tempd,
+static void	free_alloc(char **ptrnewstr, char *temptrim,
 							int *tempindex, int *templength)
 {
+	int	i;
+
+	i = 0;
 	if (ptrnewstr)
-		while (*ptrnewstr++)
-			free(*ptrnewstr);
+		if (*ptrnewstr)
+			while (*ptrnewstr)
+			{
+				free(ptrnewstr[i]);
+				i++;
+			}
 	free(ptrnewstr);
-	free(tempd);
+	free(temptrim);
 	free(tempindex);
 	free(templength);
 }
 
-static int	ft_countword(char c, char *tempd,
+static int	ft_countword(char c, char *temptrim,
 							int *tempindex, int *templength)
 {
 	int i;
@@ -35,14 +42,14 @@ static int	ft_countword(char c, char *tempd,
 	i = 0;
 	countword = 0;
 	index = 0;
-	while (tempd[i])
+	while (temptrim[i])
 	{
-		if (tempd[i] != c)
+		if (temptrim[i] != c)
 		{
 			tempindex[index] = i;
 			index++;
 			countlength = 0;
-			while (tempd[i] != c && tempd[i] != '\0')
+			while (temptrim[i] != c && temptrim[i] != '\0')
 			{
 				i++;
 				countlength++;
@@ -54,7 +61,7 @@ static int	ft_countword(char c, char *tempd,
 	return (countword);
 }
 
-static char	**ft_split_static(char c, char *tempd,
+static char	**ft_split_static(char c, char *temptrim,
 								int *templength, int *tempindex)
 {
 	int		countword;
@@ -62,33 +69,33 @@ static char	**ft_split_static(char c, char *tempd,
 	char	**ptrnewstr;
 
 	i = 0;
-	countword = ft_countword(c, tempd, tempindex, templength);
+	countword = ft_countword(c, temptrim, tempindex, templength);
 	ptrnewstr = (char **)malloc(sizeof(char *) * (countword + 1));
 	if (!ptrnewstr)
 	{
-		free_alloc(ptrnewstr, tempd, tempindex, templength);
+		free_alloc(ptrnewstr, temptrim, tempindex, templength);
 		return (NULL);
 	}
 	i = 0;
 	while (i < countword)
 	{
-		if (!(ptrnewstr[i] = ft_substr(tempd, tempindex[i], templength[i])))
+		if (!(ptrnewstr[i] = ft_substr(temptrim, tempindex[i], templength[i])))
 		{
-			free_alloc(ptrnewstr, tempd, tempindex, templength);
+			free_alloc(ptrnewstr, temptrim, tempindex, templength);
 			return (NULL);
 		}
 		i++;
 	}
 	ptrnewstr[i] = NULL;
-	free_alloc(NULL, tempd, tempindex, templength);
+	free_alloc(NULL, temptrim, tempindex, templength);
 	return (ptrnewstr);
 }
 
-static int	*ft_allocate_intmass(char *tempd)
+static int	*ft_allocate_intmass(char *temptrim)
 {
 	int	*temp;
 
-	temp = (int *)malloc(sizeof(int) * ft_strlen(tempd));
+	temp = (int *)malloc(sizeof(int) * ft_strlen(temptrim));
 	if (!temp)
 		return (NULL);
 	return (temp);
@@ -97,27 +104,27 @@ static int	*ft_allocate_intmass(char *tempd)
 char		**ft_split(char const *s, char c)
 {
 	char	**ptrnewstr;
-	char	*tempd;
+	char	*temptrim;
 	int		*templength;
 	int		*tempindex;
 
 	if (s)
 	{
-		if (s[0] == '\0')
+		if (s[0] == '\0' || c == 0)
 		{
 			if (!(ptrnewstr = (char **)malloc(sizeof(char *) * 2)))
 				return (NULL);
-			ptrnewstr[0] = "'\0'";
+			ptrnewstr[0] = "";
 			ptrnewstr[1] = NULL;
 			return (ptrnewstr);
 		}
-		if ((tempd = ft_strtrim((char *)s, &c)))
-			if ((templength = ft_allocate_intmass(tempd)))
-				if ((tempindex = ft_allocate_intmass(tempd)))
-					if ((ptrnewstr = ft_split_static(c, tempd,
+		if ((temptrim = ft_strtrim((char *)s, &c)))
+			if ((templength = ft_allocate_intmass(temptrim)))
+				if ((tempindex = ft_allocate_intmass(temptrim)))
+					if ((ptrnewstr = ft_split_static(c, temptrim,
 						tempindex, templength)))
 						return (ptrnewstr);
 	}
-	free_alloc(ptrnewstr, tempd, tempindex, templength);
+	free_alloc(ptrnewstr, temptrim, tempindex, tempindex);
 	return (NULL);
 }
