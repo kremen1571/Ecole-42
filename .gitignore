@@ -10,7 +10,6 @@
 *.so
 *.swp
 /libft-unit-test/
-Makefile
 MyMakefile
 main.c
 
