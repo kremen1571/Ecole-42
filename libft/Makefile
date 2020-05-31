@@ -6,13 +6,15 @@
 #    By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/21 03:12:27 by klaronda          #+#    #+#              #
-#    Updated: 2020/05/22 13:07:06 by klaronda         ###   ########.fr        #
+#    Updated: 2020/05/23 19:56:17 by klaronda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 NAMESO = libft.so
+
+HEADER = libft.h
 
 SRC = ft_memset.c ft_strrchr.c ft_bzero.c ft_strnstr.c ft_memcpy.c ft_strncmp.c ft_memccpy.c \
 		ft_atoi.c ft_memmove.c ft_isalpha.c ft_memchr.c ft_isdigit.c ft_memcmp.c ft_isalnum.c \
@@ -25,7 +27,7 @@ SRC_BONUS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_ba
 
 OBJ = ${SRC:.c=.o}
 
-OBJ_BONUS = ${SRC_BONUS:.c=.o}
+OBJ_BONUS = ${SRC_BONUS:.c=.o}	
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -39,15 +41,17 @@ REMOVE = rm -f
 
 all: $(NAME)
 
-$(NAME):
-	@$(COMPILE) $(SRC)
+$(NAME): $(OBJ)
 	@$(LIB) $(OBJ)
 	@$(RANLIB)
 
-bonus:
-	@$(COMPILE) $(SRC_BONUS)
+bonus: $(OBJ_BONUS)
+
 	@$(LIB) $(OBJ_BONUS)
 	@$(RANLIB)
+
+%.o: %.c $(HEADER)
+	$(COMPILE) $< -o $@
 
 clean:
 	@$(REMOVE) $(OBJ) $(OBJ_BONUS)
@@ -58,7 +62,7 @@ fclean: clean
 re: fclean all
 
 so:
-	gcc -fPIC -c $(SRC)
-	gcc -shared -Wl,-soname,libft.so -o libft.so *.o
+	@$(COMPILE) -fPIC $(SRC) $(SRC_BONUS)
+	@$(CC) -shared -o $(NAMESO) $(OBJ) $(OBJ_BONUS)
 
 .PHONY: all clean fclean re

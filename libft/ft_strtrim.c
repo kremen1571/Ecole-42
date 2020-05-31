@@ -45,9 +45,9 @@ static int		ft_indexend(char *s1, char *set)
 	unsigned int	j;
 	int				indexend;
 
-	i = ft_strlen(s1) - 1;
+	i = ft_strlen(s1);
 	indexend = 0;
-	while (s1[i] >= 0)
+	while (i >= 0)
 	{
 		j = 0;
 		while (set[j] != '\0')
@@ -58,13 +58,11 @@ static int		ft_indexend(char *s1, char *set)
 		}
 		if (j == ft_strlen(set) && s1[i] != set[j])
 		{
-			indexend = i;
+			indexend = i + 1;
 			break ;
 		}
 		i--;
 	}
-	if (i < 0)
-		return (0);
 	return (indexend);
 }
 
@@ -72,8 +70,8 @@ static char		*ft_indexendiszero(void)
 {
 	char	*ptrnewstr;
 
-	ptrnewstr = (char *)malloc(1);
-	*ptrnewstr = '\0';
+	ptrnewstr = (char *)malloc(sizeof(char));
+	ptrnewstr[0] = '\0';
 	return (ptrnewstr);
 }
 
@@ -108,7 +106,7 @@ char			*ft_strtrim(char const *s1, char const *set)
 	indexend = ft_indexend((char *)s1, (char *)set);
 	if (indexend == 0)
 		return (ft_indexendiszero());
-	lennewstr = indexend - indexstart + 1;
+	lennewstr = indexend - indexstart;
 	ptrnewstr = (char *)malloc((lennewstr) + 1);
 	if (!ptrnewstr)
 		return (NULL);
