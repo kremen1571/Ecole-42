@@ -11,6 +11,7 @@
 *.swp
 /libft-unit-test/
 MyMakefile
+main.c
 my_libft/tests_libft/*
 
 # User-specific files
