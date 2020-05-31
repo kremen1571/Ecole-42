@@ -12,7 +12,7 @@
 /libft-unit-test/
 MyMakefile
 main.c
-tests_libft/*
+/tests_libft/*
 
 # User-specific files
 *.rsuser
