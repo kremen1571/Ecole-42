@@ -14,6 +14,13 @@ MyMakefile
 main.c
 my_libft/tests_libft/*
 
+my_gnl/42TESTERS-GNL/*
+my_gnl/intra-uuid-66950435-bd5a-4125-b2b5-ac4ef2941d22-3228708
+my_gnl/main_from_42TESTER_&_wtLEEKS
+/my_netwhat/*
+my_printf/main_tests.c
+my_netwhat/intra-uuid-d914c12e-a4d1-482f-abf5-f66319936d39-3214005/answer.txt
+tests/*
 # User-specific files
 *.rsuser
 *.suo
