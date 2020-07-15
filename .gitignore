@@ -19,6 +19,8 @@ my_netwhat/answer.txt
 my_printf/main_tests.c
 my_netwhat/intra-uuid-d914c12e-a4d1-482f-abf5-f66319936d39-3214005/answer.txt
 tests/*
+*/printf/*
+*/my_gnl/.vscode/*
 
 /my_gnl/42TESTERS-GNL/*
 /my_gnl/main_from_42TESTER_&_wtLEEKS

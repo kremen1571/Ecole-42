@@ -92,9 +92,7 @@ int		ft_check(char **str, char **line, char **excess)
 		return (-1);
 	}
 	if (ft_strchr(*str, '\n'))
-	{
 		i = ft_add_excess(*str, line, excess);
-	}
 	else if (!ft_strchr(*str, '\n'))
 	{
 		temp = *line;
@@ -122,8 +120,8 @@ int		get_next_line(int fd, char **line)
 	if (excess)
 		if ((x = ft_check(&excess, line, &excess)) != 2)
 			return (x);
-	if (BUFFER_SIZE <= 0 || !line || !(buf = (char *)malloc(BUFFER_SIZE *
-		(sizeof(char)) + 1)) || (read(fd, buf, 0)) < 0)
+	if (BUFFER_SIZE <= 0 || fd < 0 || !line || (read(fd, 0, 0)) < 0 ||
+		!(buf = (char *)malloc(BUFFER_SIZE * (sizeof(char)) + 1)))
 		return (-1);
 	while ((rd = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
@@ -137,4 +135,22 @@ int		get_next_line(int fd, char **line)
 	free(buf);
 	x = (rd == 0) ? 0 : -1;
 	return (x);
+}
+int main ()
+{
+	int             fd;
+	int             i;
+	int             j;
+	char    		*line;
+	 //fd = open("file.txt", O_RDONLY);
+while ((i = get_next_line(fd, &line)) > 0)
+	{
+		printf("|%s\n", line);
+		free(line);
+		j++;
+	}
+	printf("|%s\n", line);
+	free(line);
+	close(fd);
+	return 0;
 }
