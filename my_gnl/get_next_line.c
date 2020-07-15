@@ -136,21 +136,4 @@ int		get_next_line(int fd, char **line)
 	x = (rd == 0) ? 0 : -1;
 	return (x);
 }
-int main ()
-{
-	int             fd;
-	int             i;
-	int             j;
-	char    		*line;
-	 //fd = open("file.txt", O_RDONLY);
-while ((i = get_next_line(fd, &line)) > 0)
-	{
-		printf("|%s\n", line);
-		free(line);
-		j++;
-	}
-	printf("|%s\n", line);
-	free(line);
-	close(fd);
-	return 0;
-}
+
