@@ -3,7 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-*my_gnl/.vscode/*
+*/my_gnl/.vscode/*
 # My files Kremen
 *.o
 *.out
