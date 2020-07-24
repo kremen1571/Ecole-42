@@ -15,13 +15,15 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
+	int	y;
 
 	i = 0;
+	y = 0;
 	if (s)
 	{
 		while (s[i] != '\0')
 		{
-			ft_putchar_fd(s[i], fd);
+			ft_putchar_fd(s[i], fd, &y);
 			i++;
 		}
 	}
