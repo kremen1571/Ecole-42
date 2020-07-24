@@ -35,7 +35,7 @@ my_printf/tests/*
 my_printf/.vscode/
 my_printf/.dist
 my_printf/printf/*.out
-my_printf/printf/pft
+my_printf/printf/pft/
 my_printf/printf/pft_2019
 
 # User-specific files
