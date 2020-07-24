@@ -17,18 +17,27 @@ main.c
 my_libft/tests_libft/*
 my_gnl/42TESTERS-GNL/*
 my_netwhat/answer.txt
-my_printf/main_tests.c
+
 my_netwhat/intra-uuid-d914c12e-a4d1-482f-abf5-f66319936d39-3214005/answer.txt
 tests/*
-*/printf/*
+
 */my_gnl/.vscode/*
 
 /my_gnl/42TESTERS-GNL/*
 /my_gnl/main_from_42TESTER_&_wtLEEKS
 /my_netwhat/*
-my_printf/main_tests.c
 /my_netwhat/intra-uuid-d914c12e-a4d1-482f-abf5-f66319936d39-3214005
 tests/*
+
+my_printf/main_tests.c
+my_printf/main.c
+my_printf/tests/*
+my_printf/.vscode/
+my_printf/.dist
+my_printf/printf/*.out
+my_printf/printf/pft
+my_printf/printf/pft_2019
+
 # User-specific files
 *.rsuser
 *.suo
