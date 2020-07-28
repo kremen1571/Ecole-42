@@ -18,7 +18,8 @@ void	ft_get_type(const char **format, t_prmtrs *lst_flags, int *symbcount)
 	(*symbcount)++;
 }
 
-void	ft_get_precision(const char **format, t_prmtrs *lst_flags, int *symbcount)
+void	ft_get_precision(const char **format, t_prmtrs *lst_flags,
+						int *symbcount)
 {
 	if ((*format)[*symbcount] == '.')
 	{
@@ -28,11 +29,12 @@ void	ft_get_precision(const char **format, t_prmtrs *lst_flags, int *symbcount)
 			(*lst_flags).precision_char = '*';
 			(*symbcount)++;
 		}
-		else 
+		else
 		{
-			(*lst_flags).precision = ft_atoi((const char *)&((*format)[*symbcount]));
+			(*lst_flags).precision = ft_atoi((const char *)&
+											((*format)[*symbcount]));
 			while ((*format)[*symbcount] >= '0' && (*format)[*symbcount] <= '9')
-			(*symbcount)++;
+				(*symbcount)++;
 		}
 		(*lst_flags).precision_explicit = 1;
 	}
@@ -46,8 +48,8 @@ void	ft_get_width(const char **format, t_prmtrs *lst_flags, int *symbcount)
 		(*symbcount)++;
 	}
 	else
-	{	
-		(*lst_flags).width = ft_atoi(&(*format)[*symbcount]); //if no width atoi retutns 0 and changed it ot zero!!!
+	{
+		(*lst_flags).width = ft_atoi(&(*format)[*symbcount]);
 		while (((*format)[*symbcount]) >= '0' && ((*format)[*symbcount]) <= '9')
 			(*symbcount)++;
 	}
@@ -65,7 +67,7 @@ void	ft_get_flags(const char **format, t_prmtrs *lst_flags, int *symbcount)
 		(*lst_flags).flag_minus = '1';
 		(*symbcount)++;
 	}
-	while((*format)[*symbcount] == '0' || (*format)[*symbcount] == '-')
+	while ((*format)[*symbcount] == '0' || (*format)[*symbcount] == '-')
 	{
 		if ((*format)[*symbcount] == '-')
 		{
@@ -80,14 +82,13 @@ int		ft_parse_format(const char *format, t_prmtrs *lst_flags, va_list ap)
 {
 	int			symbcount;
 
-	symbcount = 0;	
+	symbcount = 0;
+	ft_init_flags_2(lst_flags);
 	ft_get_flags(&format, lst_flags, &symbcount);
 	ft_get_width(&format, lst_flags, &symbcount);
 	ft_get_precision(&format, lst_flags, &symbcount);
 	ft_get_type(&format, lst_flags, &symbcount);
-	
-	ft_processing(lst_flags, ap);
-
+	if (ft_processing(lst_flags, ap) < 0)
+		return (-1);
 	return (symbcount);
 }
-

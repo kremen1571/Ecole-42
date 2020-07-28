@@ -14,15 +14,23 @@
 
 int		ft_print_format(const char *format, va_list ap)
 {
-	int	i;
+	int			i;
+	int			t;
 	t_prmtrs	lst_flags;
 
 	i = 0;
+	t = 0;
 	ft_init_flags(&lst_flags);
 	while ((format)[i] != '\0')
 	{
 		if ((format)[i] == '%')
-			i = i + (ft_parse_format((const char *)&format[++i], &lst_flags, ap));
+		{
+			++i;
+			if ((t = ft_parse_format((const char *)&format[i],
+				&lst_flags, ap)) < 0)
+				return (0);
+			i = i + t;
+		}
 		else
 		{
 			ft_putchar_fd((format)[i], 1, &lst_flags.rtrnval);

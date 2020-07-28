@@ -12,8 +12,7 @@
 
 #include "ft_printf.h"
 
-
-int		ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	int		count;
 	va_list ap;

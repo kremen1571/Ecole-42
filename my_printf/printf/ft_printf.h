@@ -33,37 +33,25 @@ typedef struct	s_flags
 }				t_prmtrs;
 
 int				ft_printf(const char *format, ...);
-
 int				ft_print_format(const char *format, va_list ap);
-
-
-
-
-int				ft_parse_format(const char *format, t_prmtrs *lst_flags, va_list ap);
-
+int				ft_parse_format(const char *format, t_prmtrs *lst_flags,
+								va_list ap);
 void			ft_init_flags(t_prmtrs *lst_flags);
-void			ft_get_type(const char **format, t_prmtrs *lst_flags, int *symbcount);
-void			ft_get_precision(const char **format, t_prmtrs *lst_flags, int *symbcount);
-void			ft_get_width(const char **format, t_prmtrs *lst_flags, int *symbcount);
-void			ft_get_flags(const char **format, t_prmtrs *lst_flags, int *symbcount);
-
-
-
-
-void			ft_processing(t_prmtrs *lst_flags, va_list ap);
-
+void			ft_init_flags_2(t_prmtrs *lst_flags);
+int				ft_processing(t_prmtrs *lst_flags, va_list ap);
 int				ft_int(t_prmtrs *lst_flags, va_list ap);
 int				ft_char(t_prmtrs *lst_flags, va_list ap);
-int				ft_int_count_print(t_prmtrs *lst_flags, int num);
-void			ft_int_check_flags(int *count_num, t_prmtrs *lst_flags, char *str);
-void			ft_int_print(int *count_num, t_prmtrs *lst_flags, char *str);
-void			ft_int_print_else(int *count_num,t_prmtrs *lst_flags, char *str);
-
-
-/*int			ft_string(t_prmtrs *lst_flags, va_list ap);
-int		ft_hex(t_prmtrs *lst_flags, va_list ap);
-int		ft_pointer(t_prmtrs *lst_flags, va_list ap);
-int		ft_persent(t_prmtrs *lst_flags, va_list ap);
-
-*/
+int				ft_string(t_prmtrs *lst_flags, va_list ap);
+int				ft_unsigned(t_prmtrs *lst_flags, va_list ap);
+int				ft_persent(t_prmtrs *lst_flags, va_list ap);
+int				ft_hexadecimal(t_prmtrs *lst_flags, va_list ap);
+char			*ft_int_to_hex(unsigned int num, int *count_num,
+								t_prmtrs *lst_flags);
+int				ft_persent(t_prmtrs *lst_flags, va_list ap);
+int				ft_pointer(t_prmtrs *lst_flags, va_list ap);
+char			*ft_long_to_hex(unsigned long long num, int *count_num,
+								t_prmtrs *lst_flags);
+void			ft_putnull_fd(int *rtrnval);
+void			ft_get_char(int num, char *num_x, t_prmtrs *lst_flags);
+void			ft_fill(char *str, int count);
 #endif
