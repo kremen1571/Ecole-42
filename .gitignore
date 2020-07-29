@@ -37,7 +37,7 @@ my_printf/.dist
 my_printf/printf/*.out
 my_printf/printf/pft/
 my_printf/printf/pft_2019
-my_printf/git
+my_printf/git/*
 # User-specific files
 *.rsuser
 *.suo
