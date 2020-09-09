@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intit.c                                         :+:      :+:    :+:   */
+/*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/09 12:58:15 by klaronda          #+#    #+#             */
-/*   Updated: 2020/09/09 12:58:24 by klaronda         ###   ########.fr       */
+/*   Created: 2020/09/09 21:16:34 by klaronda          #+#    #+#             */
+/*   Updated: 2020/09/09 21:16:37 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_ptr	*ft_init_ptr(t_ptr *ptr)
+void	ft_free(t_ptr *ptr)
 {
-	if (!(ptr = (t_ptr *)malloc(sizeof(t_ptr))))
-		ft_error("slomalos");
-	return (ptr);
-}
-
-void	ft_init_cub(t_cub *cub)
-{
-	cub->ea = NULL;
-	cub->we = NULL;
-	cub->s = NULL;
-	cub->so = NULL;
-	cub->no = NULL;
+	free(ptr->cub.map);
+    free(ptr->cub.ea);
+    free(ptr->cub.no);
+    free(ptr->cub.we);
+    free(ptr->cub.s);
+    free(ptr->cub.so);
+    free(ptr);
 }

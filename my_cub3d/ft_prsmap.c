@@ -35,12 +35,16 @@ void	ft_addtomapline(char *line, char **map)
 	char	*str;
 
 	i = 0;
-	if (!(*map))
+	if (!*map)
+		*map = ft_strdup(line);
+	else
 	{
-		if (!(*map = (char *)malloc(sizeof(char) + 1)))
-			ft_error("malloc pdc");
-	*map[i] = '\0';
+		str = *map;
+		*map = ft_strjoin(*map, line);
+		free(str);
 	}
-	str = ft_strjoin(*map, line);
-	printf("%s\n", (str));
+	str = *map;
+	*map = ft_strjoin(*map, "\n");
+	free(str);
 }
+	

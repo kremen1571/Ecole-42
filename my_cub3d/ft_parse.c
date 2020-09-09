@@ -79,7 +79,7 @@ int	prs_pth(char *line, char *str, char **path, int *err)
 	return (0);
 }
 
-int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, char **map)
+int	ft_parse_element(char *line, t_cub *cub, t_map_error *er)
 {
 	int		i;
 	char	str[2];
@@ -93,6 +93,10 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, char **map)
 		return (0);
 	str[0] = line[i];
 	str[1] = line[i + 1];
+	if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0 && line[i] != 0)
+		ft_addtomapline(line, &cub->map);
+	if (ft_check_prmtrs(&line[i]) < 0)
+		ft_error("Args wrong");
 	equals(str, "NO") == 0 ? prs_pth(&line[i + 2], "NO", &cub->no, &er->no) : 0;
 	equals(str, "SO") == 0 ? prs_pth(&line[i + 2], "SO", &cub->so, &er->so) : 0;
 	equals(str, "WE") == 0 ? prs_pth(&line[i + 2], "WE", &cub->we, &er->we) : 0;
@@ -101,10 +105,6 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, char **map)
 	line[i] == 'R' ? ft_prs_rsltn(&line[i], &cub->x, &cub->y, &er->r) : 0;
 	line[i] == 'F' ? parse_color(&line[i], cub->flr, &er->flr) : 0;
 	line[i] == 'C' ? parse_color(&line[i], cub->cllng, &er->cllng) : 0;
-	if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0 && line[i] != 0)
-		ft_addtomapline(line, map);
-	if (ft_check_prmtrs(&line[i]) < 0)
-		ft_error("Args wrong");
 	return (0);
 }
 
@@ -120,10 +120,10 @@ int	ft_parse(char *str, t_ptr *ptr)
 		ft_error("File Open Error");
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		ft_parse_element(line, &ptr->cub, &ptr->map_erorr, &ptr->cub.map);
+		ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
 		free(line);
 	}
-	ft_parse_element(line, &ptr->cub, &ptr->map_erorr, &ptr->cub.map);
+	ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
 	//ft_parse_map(map);
 	free(line);
 	checkflagserror(&ptr->map_erorr);

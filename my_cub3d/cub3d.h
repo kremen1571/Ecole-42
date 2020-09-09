@@ -39,6 +39,7 @@ typedef struct cub3d_errormap
 	int	s;
 	int	flr;
 	int	cllng;
+	int	map;
 }				t_map_error;
 
 
@@ -93,6 +94,8 @@ void	ft_addtomapline(char *line, char **map);
 
 //init
 void	ft_init_cub(t_cub *cub);
-void	ft_init_ptr(t_ptr *ptr);
+t_ptr	*ft_init_ptr(t_ptr *ptr);
 
+
+void	ft_free(t_ptr *ptr);
 #endif
