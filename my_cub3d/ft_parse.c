@@ -21,9 +21,9 @@ int	parse_color(char *line, int *color, int *err_col)
 	i = 1;
 	check_color(line, 1);
 	color[0] = ft_atoi(&line[i]);
-	ft_check_clrbfrcoma(&i, &line[i]);
+	ft_check_clrbfrcoma(&i, line);
 	color[1] = ft_atoi(&line[++i]);
-	ft_check_clrbfrcoma(&i, &line[i]);
+	ft_check_clrbfrcoma(&i, line);
 	color[2] = ft_atoi(&line[++i]);
 	while (line[i] == ' ')
 		i++;
@@ -60,6 +60,7 @@ int	ft_prs_rsltn(char *line, int *x, int *y, int *r)
 	}
 	if (*r == 1)
 		ft_error("Duplicate resolurion");
+	ft_check_screenresolution(x, y);
 	*r = 1;
 	return (0);
 }
@@ -100,8 +101,8 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er)
 	line[i] == 'R' ? ft_prs_rsltn(&line[i], &cub->x, &cub->y, &er->r) : 0;
 	line[i] == 'F' ? parse_color(&line[i], cub->flr, &er->flr) : 0;
 	line[i] == 'C' ? parse_color(&line[i], cub->cllng, &er->cllng) : 0;
-	/* if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0)
-		//maptolst(line); */
+	if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0)
+		maptolst(line);
 	if (ft_check_prmtrs(&line[i]) < 0)
 		ft_error("Args wrong");
 	return (0);
@@ -119,10 +120,10 @@ int	ft_parse(char *str, t_ptr *ptr)
 		ft_error("File Open Error");
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		ft_parse_element(line, ptr->cub, ptr->map_erorr);
+		ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
 		free(line);
 	}
-	ft_parse_element(line, ptr->cub, ptr->map_erorr);
+	ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
 	//ft_parse_map(map);
 	free(line);
 	checkflagserror(&ptr->map_erorr);

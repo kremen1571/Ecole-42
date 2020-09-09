@@ -44,8 +44,8 @@ typedef struct cub3d_errormap
 
 typedef struct cub3d_ptr
 {
-	t_cub	*cub;
-	t_map_error	*map_erorr;
+	t_cub		cub;
+	t_map_error	map_erorr;
 }				t_ptr;
 
 
@@ -81,6 +81,7 @@ int		checkflags(t_map_error *er);
 void	checkflagserror(t_map_error *er);
 void	ft_check_clrbfrcoma(int *i, char *line);
 void	ft_checksymbolsresol(char *line);
+void	ft_check_screenresolution(int *x, int *y);
 /*
 ** parse
 */

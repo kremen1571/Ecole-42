@@ -59,3 +59,19 @@ https://lodev.org/cgtutor/raycasting3.html
 3 отсортировать спрайты по расстоянию
 Далее там описано через матрицы, а я делал через тригонометрию, пример решения через тригонометрические формулы можно посмотреть тут:
 https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-2/
+
+
+
+
+Как решить проблему битой BMP при определенном разрешении ?
+itressa  1 day ago
+писать бмп правильным алгоритмом :+1:
+dmortal  1 day ago
+А ты в каком режиме рисуешь? 3 или 4 байта? Если рисовать в 4 байта(TRGB - прозрачность, красный, зеленый и синий), то заморочек нет, а если в 3 байта, то надо делать кол-во пикселей в ширину кратным 4, то есть добавить 0. Например, если ширина 601 пиксель, то надо добавить 3 нуля в конце для каждой строки.
+Тут подробнее
+https://medium.com/sysf/bits-to-bitmaps-a-simple-walkthrough-of-bmp-image-format-765dc6857393
+В заголовке Constructing 24-bit Bitmap Image
+MediumMedium
+Bits to Bitmaps: A simple walkthrough of BMP Image Format
+In this article, we will go through simple concepts of Bitmap image format and understand how we can assemble simple BMP images from…
+Reading time
