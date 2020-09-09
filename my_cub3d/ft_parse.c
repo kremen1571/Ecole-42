@@ -112,7 +112,6 @@ int	ft_parse(char *str, t_ptr *ptr)
 	int			fd;
 	char		*line;
 	int			i;
-	t_map_error	er;
 	
 	line = NULL;
 	i = 0;
@@ -126,7 +125,7 @@ int	ft_parse(char *str, t_ptr *ptr)
 	ft_parse_element(line, ptr->cub, ptr->map_erorr);
 	//ft_parse_map(map);
 	free(line);
-	checkflagserror(ptr->map_erorr);
+	checkflagserror(&ptr->map_erorr);
 	if (i < 0)
 		ft_error("File Reading Error");
 	return (0);
