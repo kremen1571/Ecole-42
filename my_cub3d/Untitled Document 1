@@ -1,0 +1,61 @@
+
+#./configure
+#Can't find a suitable X11 include directory.
+https://askdev.ru/q/h11-biblioteki-xlib-h-ne-nayden-v-ubuntu-66039/
+
+#mlx_int.h:31:11: fatal error: /usr/include/X11/extensions/XShm.h: No such file or directory
+# include </usr/include/X11/extensions/XShm.h>
+sudo apt-get install libxext-dev
+
+#команды, достать коды клавиш клавы linux ubuntu:
+работает:
+xev | grep keycode
+не работает:
+sudo showkey --scancode
+	
+Куб https://www.freefileconvert.com/png-xpm
+
+https://harm-smits.github.io/42docs/libs/minilibx/introduction.html
+
+https://harm-smits.github.io/42docs/libs/minilibx/introduction.html
+
+https://youtu.be/vK6_Hz6O8iA
+
+https://www.youtube.com/watch?v=xW8skO7MFYw - одна из самых полезных штук, которые мне попались. Начала с нее и за день плотной работы с помощью более опытных пиров получилось вот так https://youtu.be/OdbUrDk9Bfk. Как ни странно для меня это вышло понятнее даже чем лекция пиров (но ее тоже советую)
+https://proglib.io/p/raycasting-for-the-smallest - похожее но статьей (обрати внимание на "как убрать эффект рыбьего глаза")
+https://lodev.org/cgtutor/raycasting.html - и еще раз
+https://zxpress.ru/article.php?id=8482 - и еще раз (я уже говорил тебе, что такое безумие?(с))
+https://www.notion.so/Cub3D-fd79729951a84906807af2b252f1d0bc - лекция пиров, гайд по библиотеке и еще полезности
+https://habr.com/en/post/131931/ - статья которая мне помогла разобраться с прыжками (вроде, еще не доделала)
+https://www.freefileconvert.com - качественный сайт для конвертации изображений в хрм онлайн (оставляет прозрачное прозрачным, нормально читается программой)
+
+Лекция без спойлеров
+https://www.youtube.com/watch?v=vK6_Hz6O8iA
+
+
+Подскажите, как вычислить, где по горизонтали рисовать спрайта?
+Есть координаты спрайта и игрока, дистанция между ними. Угол между углом поворота игрока и спрайтом. 
+По моей логике, ширина экрана / FOV * угол между игроком и спрайтом. Если  0<результат<ширина экрана, то спрайт в пределах fov (если не брать в расчет стены). 
+Гайды читал, не понимаю.
+https://proglib.io/p/raycasting-for-the-smallest
+
+man по xlib - к которой обращается minilibx - там есть всякие маски событий и тд и тп 
+https://tronche.com/gui/x/xlib/
+
+
+https://github.com/42Paris/minilibx-linux
+тебе отсюда нужно взять либу и вызвать make внутри и всё. возможно тебе понадобится поменять gcc на clang в makefile.mk/gen файлах (это решало у меня проблемы с компиляцией уже программ типа multiple definitions или типа того).
+там ещё посмотришь скомпилировался ли mlx_test. там же по сути пример как тебе компилировать с библиотекой твой куб
+
+
+@imicah Вот тут можно подробно ознакомиться с разными флагами оптимизации (clang их тоже понимает): https://wiki.gentoo.org/wiki/GCC_optimization#Optimizing
+TL;DR: -O3 использует агрессивную оптимизацию, которая, в некоторых случаях, может привести к замедлению выполнения программы и даже сломать ее...
+
+
+Общий порядок действий хорошо описан тут:
+https://lodev.org/cgtutor/raycasting3.html
+1 создать массив спрайтов
+2 посчитать расстояние до каждого спрайта
+3 отсортировать спрайты по расстоянию
+Далее там описано через матрицы, а я делал через тригонометрию, пример решения через тригонометрические формулы можно посмотреть тут:
+https://dev.opera.com/articles/3d-games-with-canvas-and-raycasting-part-2/
