@@ -29,7 +29,18 @@ void	check_topmapline(char *line, t_list *map)
 	}
 }
 
-/* void	maptolst(char *line, t_list *map)
+void	ft_addtomapline(char *line, char **map)
 {
-	
-} */
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (!(*map))
+	{
+		if (!(*map = (char *)malloc(sizeof(char) + 1)))
+			ft_error("malloc pdc");
+	*map[i] = '\0';
+	}
+	str = ft_strjoin(*map, line);
+	printf("%s\n", (str));
+}
