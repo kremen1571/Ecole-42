@@ -12,6 +12,21 @@
 
 #include "cub3d.h"
 
+void	ft_check_map_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ' && line[i] != '1' && line[i] != '2' &&
+			line[i] != 'N' && line[i] != 'E' && line[i] != 'W' &&
+			line[i] != 'S' && line[i] != '0')
+			ft_error("Wrong map args");
+		i++;
+	}
+}
+
 int		checkflags(t_map_error *er)
 {
 	if (er->we != 1)

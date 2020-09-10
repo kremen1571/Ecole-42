@@ -27,6 +27,8 @@ typedef struct cub3d
 	int		flr[3];
 	int		cllng[3];
 	char	*map;
+	int		map_x;
+	int		map_y;
 }				t_cub;
 
 typedef struct cub3d_errormap
@@ -40,14 +42,21 @@ typedef struct cub3d_errormap
 	int	flr;
 	int	cllng;
 	int	map;
+	int mapstart;
 }				t_map_error;
 
+typedef struct cub3d_map
+{
+	char	**map;
+	
+}				t_map;
 
 
 typedef struct cub3d_ptr
 {
 	t_cub		cub;
 	t_map_error	map_erorr;
+	t_map		map;
 }				t_ptr;
 
 
@@ -90,7 +99,8 @@ void	ft_check_screenresolution(int *x, int *y);
 int		ft_parse(char *str, t_ptr *ptr);
 void	prsmap(char *line, t_list *map);
 void	check_topmapline(char *line, t_list *map);
-void	ft_addtomapline(char *line, char **map);
+void	ft_check_map_line(char *line);
+void	ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub);
 
 //init
 void	ft_init_cub(t_cub *cub);

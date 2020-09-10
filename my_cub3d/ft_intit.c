@@ -16,6 +16,8 @@ t_ptr	*ft_init_ptr(t_ptr *ptr)
 {
 	if (!(ptr = (t_ptr *)malloc(sizeof(t_ptr))))
 		ft_error("slomalos");
+	ptr->cub.map_x = 0;
+	ptr->cub.map_y = 0;
 	return (ptr);
 }
 

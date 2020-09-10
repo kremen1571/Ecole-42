@@ -89,13 +89,14 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er)
 		ft_error("Error with map file");
 	while (line[i] == ' ')
 		i++;
-	if (line[i] == '\n')
-		return (0);
 	str[0] = line[i];
 	str[1] = line[i + 1];
+	if (str[0] == '1' || str[1] == '0')
+		er->mapstart = 1;
 	if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0 && line[i] != 0)
-		ft_addtomapline(line, &cub->map);
-	if (ft_check_prmtrs(&line[i]) < 0)
+		ft_addtomapline(line, &cub->map, &er->map, cub);
+	if (ft_check_prmtrs(&line[i]) < 0 || (er->map == 1 && line[i] == 0) ||
+		(er->mapstart == 1 && (line[i] != '1' && line[i] != '0')))
 		ft_error("Args wrong");
 	equals(str, "NO") == 0 ? prs_pth(&line[i + 2], "NO", &cub->no, &er->no) : 0;
 	equals(str, "SO") == 0 ? prs_pth(&line[i + 2], "SO", &cub->so, &er->so) : 0;
@@ -113,7 +114,7 @@ int	ft_parse(char *str, t_ptr *ptr)
 	int			fd;
 	char		*line;
 	int			i;
-	
+
 	line = NULL;
 	i = 0;
 	if (!(fd = open(str, O_RDONLY)))
@@ -124,10 +125,10 @@ int	ft_parse(char *str, t_ptr *ptr)
 		free(line);
 	}
 	ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
-	//ft_parse_map(map);
 	free(line);
 	checkflagserror(&ptr->map_erorr);
 	if (i < 0)
 		ft_error("File Reading Error");
+	//ft_check_map(ptr);
 	return (0);
 }
