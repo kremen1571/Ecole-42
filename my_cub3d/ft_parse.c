@@ -129,6 +129,6 @@ int	ft_parse(char *str, t_ptr *ptr)
 	checkflagserror(&ptr->map_erorr);
 	if (i < 0)
 		ft_error("File Reading Error");
-	//ft_check_map(ptr);
+	ft_check_map(ptr);
 	return (0);
 }

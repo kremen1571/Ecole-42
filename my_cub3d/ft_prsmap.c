@@ -57,8 +57,8 @@ void	ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub)
 			ft_error("Wrong join");
 		free(str);
 	}
-	if (cub->map_x < ft_strlen(*map))
-		cub->map_x = ft_strlen(*map);
+	if (cub->map_x < ft_strlen(line))
+		cub->map_x = ft_strlen(line);
 	cub->map_y++;
 	str = *map;
 	if (!(*map = ft_strjoin(*map, "\n")))

@@ -48,7 +48,7 @@ typedef struct cub3d_errormap
 typedef struct cub3d_map
 {
 	char	**map;
-	
+
 }				t_map;
 
 
@@ -101,6 +101,7 @@ void	prsmap(char *line, t_list *map);
 void	check_topmapline(char *line, t_list *map);
 void	ft_check_map_line(char *line);
 void	ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub);
+void	ft_check_map(t_ptr *ptr);
 
 //init
 void	ft_init_cub(t_cub *cub);
