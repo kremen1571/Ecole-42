@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void	ft_check_verticalmap(char **map, int y, int x)
 {
@@ -29,7 +29,8 @@ void	ft_check_verticalmap(char **map, int y, int x)
 			{
 				if (i < (y - 1) && map[i][x] == ' ')
 				{
-					if (map[i - 1][x] == '0' || map[i + 1][x] == '0')
+					if (map[i - 1][x] == '0' || map[i + 1][x] == '0' ||
+						map[i - 1][x] == '2' || map[i + 1][x] == '2')
 						ft_error("MAP vert is not closed");
 				}
 				i++;
@@ -57,7 +58,8 @@ void	ft_check_horisntmap(char **map, int y, int x)
 			{
 				if (map[y][i] == ' ')
 				{
-					if (map[y][i - 1] == '0' || map[y][i + 1] == '0')
+					if (map[y][i - 1] == '0' || map[y][i + 1] == '0' ||
+						map[y][i - 1] == '2' || map[y][i + 1] == '2')
 						ft_error("MAP horisont is not closed");
 				}
 				i++;

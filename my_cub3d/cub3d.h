@@ -62,6 +62,17 @@ typedef struct cub3d_plr
 	int		y;
 }				t_plr;
 
+//mlx structs
+
+typedef struct  s_data {
+    void        *img;
+    char        *addr;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+    void        *mlx;
+    void        *win;
+}               t_data;
 
 typedef struct cub3d_ptr
 {
@@ -69,7 +80,9 @@ typedef struct cub3d_ptr
 	t_map_error	map_erorr;
 	t_map		map;
 	t_plr		plr;
+	t_data		data;
 }				t_ptr;
+
 
 
 /*
@@ -124,6 +137,12 @@ t_ptr	*ft_init_ptr();
 void	ft_init_map(t_ptr *ptr);
 void	ft_fill_map_array(t_ptr *ptr);
 
+/*
+** game
+*/
+
+void	ft_mlx_start(t_ptr *ptr);
 
 void	ft_free(t_ptr *ptr);
+
 #endif

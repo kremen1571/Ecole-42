@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "utils/libft/libft.h"
+#include "../cub3d.h"
+#include "../utils/libft/libft.h"
 
 int		ft_check_cubarg(char *str)
 {

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "utils/gnl/get_next_line.h"
-#include "utils/libft/libft.h"
+#include "../cub3d.h"
+#include "../utils/gnl/get_next_line.h"
+#include "../utils/libft/libft.h"
 
 int	parse_color(char *line, int *color, int *err_col)
 {

@@ -10,4 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../cub3d.h"
+
+void	ft_mlx_start(t_ptr *ptr)
+{
+	ptr->data.mlx = mlx_init();
+	ptr->data.win = mlx_new_window(ptr->data.mlx, ptr->cub.x, ptr->cub.y, "cub3D");
+}
 

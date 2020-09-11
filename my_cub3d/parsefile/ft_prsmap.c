@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "utils/libft/libft.h"
+#include "../cub3d.h"
+#include "../utils/libft/libft.h"
 
 void	ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub)
 {
