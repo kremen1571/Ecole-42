@@ -31,9 +31,6 @@ int		ft_check_cubarg(char *str)
 
 int		ft_check_args(int *argc, char *argv[])
 {
-	int	i;
-
-	i = 0;
 	if (*argc == 2)
 	{
 		if (ft_check_cubarg(argv[1]) != 0)

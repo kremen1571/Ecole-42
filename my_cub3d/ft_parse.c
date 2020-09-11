@@ -65,7 +65,7 @@ int	ft_prs_rsltn(char *line, int *x, int *y, int *r)
 	return (0);
 }
 
-int	prs_pth(char *line, char *str, char **path, int *err)
+int	prs_pth(char *line, char **path, int *err)
 {
 	int	i;
 
@@ -98,11 +98,11 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er)
 	if (ft_check_prmtrs(&line[i]) < 0 || (er->map == 1 && line[i] == 0) ||
 		(er->mapstart == 1 && (line[i] != '1' && line[i] != '0')))
 		ft_error("Args wrong");
-	equals(str, "NO") == 0 ? prs_pth(&line[i + 2], "NO", &cub->no, &er->no) : 0;
-	equals(str, "SO") == 0 ? prs_pth(&line[i + 2], "SO", &cub->so, &er->so) : 0;
-	equals(str, "WE") == 0 ? prs_pth(&line[i + 2], "WE", &cub->we, &er->we) : 0;
-	equals(str, "EA") == 0 ? prs_pth(&line[i + 2], "EA", &cub->ea, &er->ea) : 0;
-	equals(str, "S ") == 0 ? prs_pth(&line[i + 2], "S ", &cub->s, &er->s) : 0;
+	equals(str, "NO") == 0 ? prs_pth(&line[i + 2], &cub->no, &er->no) : 0;
+	equals(str, "SO") == 0 ? prs_pth(&line[i + 2], &cub->so, &er->so) : 0;
+	equals(str, "WE") == 0 ? prs_pth(&line[i + 2], &cub->we, &er->we) : 0;
+	equals(str, "EA") == 0 ? prs_pth(&line[i + 2], &cub->ea, &er->ea) : 0;
+	equals(str, "S ") == 0 ? prs_pth(&line[i + 2], &cub->s, &er->s) : 0;
 	line[i] == 'R' ? ft_prs_rsltn(&line[i], &cub->x, &cub->y, &er->r) : 0;
 	line[i] == 'F' ? parse_color(&line[i], cub->flr, &er->flr) : 0;
 	line[i] == 'C' ? parse_color(&line[i], cub->cllng, &er->cllng) : 0;
@@ -129,6 +129,7 @@ int	ft_parse(char *str, t_ptr *ptr)
 	checkflagserror(&ptr->map_erorr);
 	if (i < 0)
 		ft_error("File Reading Error");
+	ft_init_map(ptr);
 	ft_check_map(ptr);
 	return (0);
 }

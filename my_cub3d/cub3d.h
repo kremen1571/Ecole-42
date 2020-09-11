@@ -10,6 +10,9 @@
 # include <sys/stat.h>
 # include <math.h>
 # include <errno.h>
+# include "mlx_Linux/mlx.h"
+# include "mlx_Linux/mlx_int.h"
+
 
 /*
 ** map struct
@@ -42,7 +45,8 @@ typedef struct cub3d_errormap
 	int	flr;
 	int	cllng;
 	int	map;
-	int mapstart;
+	int	mapstart;
+	int	plrpos;
 }				t_map_error;
 
 typedef struct cub3d_map
@@ -51,12 +55,20 @@ typedef struct cub3d_map
 
 }				t_map;
 
+typedef struct cub3d_plr
+{
+	char	dir;
+	int		x;
+	int		y;
+}				t_plr;
+
 
 typedef struct cub3d_ptr
 {
 	t_cub		cub;
 	t_map_error	map_erorr;
 	t_map		map;
+	t_plr		plr;
 }				t_ptr;
 
 
@@ -98,14 +110,19 @@ void	ft_check_screenresolution(int *x, int *y);
 */
 int		ft_parse(char *str, t_ptr *ptr);
 void	prsmap(char *line, t_list *map);
-void	check_topmapline(char *line, t_list *map);
+//void	check_topmapline(char *line, t_list *map);
 void	ft_check_map_line(char *line);
 void	ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub);
 void	ft_check_map(t_ptr *ptr);
+void	ft_check_plrmap(char **map, int y, int x, t_ptr *ptr);
+void	ft_check_verticalmap(char **map, int y, int x);
+void	ft_check_horisntmap(char **map, int y, int x);
 
 //init
 void	ft_init_cub(t_cub *cub);
-t_ptr	*ft_init_ptr(t_ptr *ptr);
+t_ptr	*ft_init_ptr();
+void	ft_init_map(t_ptr *ptr);
+void	ft_fill_map_array(t_ptr *ptr);
 
 
 void	ft_free(t_ptr *ptr);
