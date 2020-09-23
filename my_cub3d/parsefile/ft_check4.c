@@ -54,7 +54,7 @@ void	ft_check_horisntmap(char **map, int y, int x)
 		{
 			while (map[y][i] == ' ')
 				i++;
-			while (map[y][i] != ' ' || i < (x - 1))
+			while (map[y][i] != ' ' && i < (x - 1))
 			{
 				if (map[y][i] == ' ')
 				{
@@ -70,7 +70,7 @@ void	ft_check_horisntmap(char **map, int y, int x)
 	}
 }
 
-void	ft_set_plr(t_ptr *ptr, char c, int x, int y)
+void	ft_set_plr(t_ptr *ptr, char c, int y, int x)
 {
 	ptr->plr.dir = c;
 	ptr->plr.x = x;

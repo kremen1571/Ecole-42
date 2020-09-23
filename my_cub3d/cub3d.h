@@ -57,9 +57,10 @@ typedef struct cub3d_map
 
 typedef struct cub3d_plr
 {
-	char	dir;
-	int		x;
-	int		y;
+	char		dir;
+	float		diranlgle;
+	float			x;
+	float			y;
 }				t_plr;
 
 //mlx structs
@@ -72,6 +73,7 @@ typedef struct  s_data {
     int         endian;
     void        *mlx;
     void        *win;
+	int			map_scale;
 }               t_data;
 
 typedef struct cub3d_ptr

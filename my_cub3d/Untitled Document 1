@@ -75,3 +75,93 @@ MediumMedium
 Bits to Bitmaps: A simple walkthrough of BMP Image Format
 In this article, we will go through simple concepts of Bitmap image format and understand how we can assemble simple BMP images from…
 Reading time
+
+
+
+
+
+
+
+Кто-нибудь делал сохранение в bmp без использования функций либы? Там цвет пикселей в инете нужны или разбитый по каналам?
+
+salec:snowflake:  5 days ago
+а разве есть функции либы для этого?
+разумеется разбитый по каналам. ты в файл байты пишешь с помощью write так что нужно разбивать 4 байта инта. почитай статью на вики с примерами файлов, как там байты пишутся
+
+https://en.wikipedia.org/wiki/BMP_file_format#Example_1 
+
+(edited) 
+WikipediaWikipedia
+BMP file format
+The BMP file format, also known as bitmap image file, device independent bitmap (DIB) file format and bitmap, is a raster graphics image file format used to store bitmap digital images, independently of the display device (such as a graphics adapter), especially on Microsoft Windows and OS/2 operating systems.
+The BMP file format is capable of storing two-dimensional digital images both monochrome and color, in various color depths, and optionally with data compression, alpha channels, and color profiles. The Windows Metafile (WMF) specification covers the BMP file format. (7 kB)
+https://upload.wikimedia.org/wikipedia/commons/d/da/AllBMPformats.png
+:pray:
+1
+ttamesha  4 days ago
+Вроде бы да, но я хочу разобраться, как это вообще в принципе работает )
+
+
+Всем привет! не могу сообразить, как использовать image. Окей, я создаю image через функцию mlx_new_image, а как его заполнять моими пикселями и выводить не врубаюсь. как понимаю mlx_pixel_put выводит сразу в окно, а как выводить в image? все делала с окном, прекрасно работает, хочу перейти на image, так как нужно будет несколько изображений выводить внутри одной программы
+itressa  4 days ago
+https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html#writing-pixels-to-a-image
+42 Docs
+Getting started
+Find code examples, optimization tricks, and much more.
+dskittri  4 days ago
+спасибо!!!
+
+
+
+
+
+#cub3d  пытаюсь понять как делать скриншоты в бмп. подскажите пожалуйста с какой стороны копать
+itressa  4 days ag
+найди гайд в интернете :slightly_smiling_face:
+bjebedia  4 days ago
+@itressa гайд по mlx или по стороннему API bmp?
+itressa  4 days ago
+не нужен там апи. От млх ты только картинку грузишь и цвета оттуда копируешь.
+В остальном просто открываешь файл и пишешь нужные туда данные (какие - в гайде)
+bjebedia  4 days ago
+@itressa мы просто руками пиксели ргб в бмп должны переписать? :thinking_face:
+itressa  4 days ago
+там еще хедер надо вставить, но по сути так )
+я копирую построчно картинку
+:thx:
+1
+:blord_crying:
+1
+mtriston  4 days ago
+@bjebedia
+1. Создаешь файл (open("name.bmp", ...)
+2. Записываешь в файл file_header ( write(fd, file_header...)
+3. Записываешь header_info
+4. Записываешь само изображение (write(fd, img.addr, ft_strlen(img.addr))
+Почитать, что должно быть в хедере файла можно тут.
+https://en.wikipedia.org/wiki/BMP_file_format#Bitmap_file_header
+Надо создать массив или структуру и заполнить ее нужными значениями, затем записать это в начало файла.
+WikipediaWikipedia
+BMP file format
+The BMP file format, also known as bitmap image file, device independent bitmap (DIB) file format and bitmap, is a raster graphics image file format used to store bitmap digital images, independently of the display device (such as a graphics adapter), especially on Microsoft Windows and OS/2 operating systems.
+The BMP file format is capable of storing two-dimensional digital images both monochrome and color, in various color depths, and optionally with data compression, alpha channels, and color profiles. The Windows Metafile (WMF) specification covers the BMP file format. (7 kB)
+https://upload.wikimedia.org/wikipedia/commons/d/da/AllBMPformats.png
+bjebedia  4 days ago
+@mtriston спасибо большое!
+bshang:satellite:  4 days ago
+https://medium.com/sysf/bits-to-bitmaps-a-simple-walkthrough-of-bmp-image-format-765dc6857393
+вот еще дельная статья
+MediumMedium
+Bits to Bitmaps: A simple walkthrough of BMP Image Format
+https://medium.com/sysf/bits-to-bitmaps-a-simple-walkthrough-of-bmp-image-format-765dc6857393
+In this article, we will go through simple concepts of Bitmap image format and understand how we can assemble simple BMP images from…
+Reading time
+19 min read
+Sep 1st (139 kB)
+https://miro.medium.com/max/1200/1*hmCdLO12me3BymN0Znn81Q.jpeg
+:fire:
+2
+:blord_heart:
+1
+ttamesha  3 days ago
+Если у тебя my pixel put, то он как раз в addr создаёт массив из пикселей, по сути -твоё изображение. Значение Bits per pixel есть в структуре , которая в мане mms называется data.
