@@ -44,7 +44,8 @@ void	check_color(char *line, int i)
 {
 	while (line[i] != '\0')
 	{
-		if ((line[i] < '0' || line[i] > '9') && line[i] != ' ' && line[i] != ',')
+		if ((line[i] < '0' || line[i] > '9') && line[i] != ' '
+			&& line[i] != ',')
 			ft_error("wrong sym color");
 		i++;
 	}

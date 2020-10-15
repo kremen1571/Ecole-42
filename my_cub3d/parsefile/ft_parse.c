@@ -79,12 +79,10 @@ int	prs_pth(char *line, char **path, int *err)
 	return (0);
 }
 
-int	ft_parse_element(char *line, t_cub *cub, t_map_error *er)
+int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, int i)
 {
-	int		i;
 	char	str[2];
 
-	i = 0;
 	if (!line)
 		ft_error("Error with map file");
 	while (line[i] == ' ')
@@ -114,17 +112,19 @@ int	ft_parse(char *str, t_ptr *ptr)
 	int			fd;
 	char		*line;
 	int			i;
+	int			i1;
 
 	line = NULL;
 	i = 0;
+	i1 = 0;
 	if (!(fd = open(str, O_RDONLY)))
 		ft_error("File Open Error");
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
+		ft_parse_element(line, &ptr->cub, &ptr->map_erorr, i1);
 		free(line);
 	}
-	ft_parse_element(line, &ptr->cub, &ptr->map_erorr);
+	ft_parse_element(line, &ptr->cub, &ptr->map_erorr, i1);
 	free(line);
 	checkflagserror(&ptr->map_erorr);
 	if (i < 0)
