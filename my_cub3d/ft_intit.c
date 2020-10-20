@@ -12,6 +12,14 @@
 
 #include "cub3d.h"
 
+void	initray(t_ray *ray)
+{
+	ray->fix = 0;
+	ray->fiy = 0;
+	ray->xstep = 0;
+	ray->ystep = 0;
+}
+
 void	wallcollisioninit(t_wallcolln *wallcolission)
 {
 	/* wallcolission->newx = 0;
@@ -19,7 +27,7 @@ void	wallcollisioninit(t_wallcolln *wallcolission)
 	wallcolission->back = 0;
 	wallcolission->front = 0;
 	wallcolission->left = 0;
-	wallcolission->wrigth = 0;
+	wallcolission->rigth = 0;
 	wallcolission->opposite = 0;
 }
 
@@ -50,7 +58,7 @@ void	ft_fill_map_array(t_ptr *ptr)
 		ptr->map.map[i][ptr->cub.map_x] = '\0';
 		i++;
 	}
-	ptr->map.map[ptr->cub.map_y] = '\0';
+	ptr->map.map[ptr->cub.map_y] = 0;
 }
 
 void	ft_init_map(t_ptr *ptr)
@@ -83,6 +91,8 @@ t_ptr	*ft_init_ptr(void)
 	//ptr->data.map_scale = MAPSCALE;
 	ptr->data.plr_scale = 4;
 	ptr->plr.diranlgle = 0;
+	ptr->ray.wallhithorz = 0;
+	ptr->ray.wallhitvert = 0;
 	/* ptr->data.linecolor = 0x00FF00;
 	ptr->data.plrcolor = 0x800080;
 	ptr->data.raycolor = 0xFCD12A; */

@@ -15,13 +15,19 @@
 int	equals(char *str1, char *str2)
 {
 	int	i;
+	int	s1;
+	int	s2;
 
 	i = 0;
-	while (str1[i] != '\0' || str2[i] != '\0')
+	s1 = ft_strlen(str1);
+	s2 = ft_strlen(str2);
+	if (s1 != s2)
+		return (-1);
+	while (i < s1)
 	{
 		if (str1[i] != str2[i])
 			return (-1);
 		i++;
 	}
-	return (0);
+	return (1);
 }

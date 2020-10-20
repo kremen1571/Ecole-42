@@ -81,7 +81,7 @@ int	prs_pth(char *line, char **path, int *err)
 
 int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, int i)
 {
-	char	str[2];
+	char	str[3];
 
 	if (!line)
 		ft_error("Error with map file");
@@ -89,6 +89,7 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, int i)
 		i++;
 	str[0] = line[i];
 	str[1] = line[i + 1];
+	str[2] = '\0';
 	if (str[0] == '1' || str[1] == '0')
 		er->mapstart = 1;
 	if (ft_check_prmtrs(&line[i]) == 0 && checkflags(er) == 0 && line[i] != 0)
@@ -96,11 +97,11 @@ int	ft_parse_element(char *line, t_cub *cub, t_map_error *er, int i)
 	if (ft_check_prmtrs(&line[i]) < 0 || (er->map == 1 && line[i] == 0) ||
 		(er->mapstart == 1 && (line[i] != '1' && line[i] != '0')))
 		ft_error("Args wrong");
-	equals(str, "NO") == 0 ? prs_pth(&line[i + 2], &cub->no, &er->no) : 0;
-	equals(str, "SO") == 0 ? prs_pth(&line[i + 2], &cub->so, &er->so) : 0;
-	equals(str, "WE") == 0 ? prs_pth(&line[i + 2], &cub->we, &er->we) : 0;
-	equals(str, "EA") == 0 ? prs_pth(&line[i + 2], &cub->ea, &er->ea) : 0;
-	equals(str, "S ") == 0 ? prs_pth(&line[i + 2], &cub->s, &er->s) : 0;
+	equals(str, "NO") == 1 ? prs_pth(&line[i + 2], &cub->no, &er->no) : 0;
+	equals(str, "SO") == 1 ? prs_pth(&line[i + 2], &cub->so, &er->so) : 0;
+	equals(str, "WE") == 1 ? prs_pth(&line[i + 2], &cub->we, &er->we) : 0;
+	equals(str, "EA") == 1 ? prs_pth(&line[i + 2], &cub->ea, &er->ea) : 0;
+	equals(str, "S ") == 1 ? prs_pth(&line[i + 2], &cub->s, &er->s) : 0;
 	line[i] == 'R' ? ft_prs_rsltn(&line[i], &cub->x, &cub->y, &er->r) : 0;
 	line[i] == 'F' ? parse_color(&line[i], cub->flr, &er->flr) : 0;
 	line[i] == 'C' ? parse_color(&line[i], cub->cllng, &er->cllng) : 0;

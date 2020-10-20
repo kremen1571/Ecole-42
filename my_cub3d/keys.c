@@ -18,7 +18,7 @@ int	keys(int keycode, t_ptr *ptr)
 		ptr->wallcolission.left = 1;
 		//moveplrleft(ptr);
 	else if (keycode == D)
-		ptr->wallcolission.wrigth = 1;
+		ptr->wallcolission.rigth = 1;
 		//moveplrright(ptr);
 	return (0);
 }

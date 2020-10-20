@@ -7,12 +7,12 @@ void	drawrectmap(t_data *data, int y, int x, int color)
 
 	i = 0;
 	j = 0;
-	x = x * MAPSCALE;
-	y = y * MAPSCALE;
-	while (++i < MAPSCALE)
+	x = x * (int)(MAPSCALE * TXTRSIZE);
+	y = y * (int)(MAPSCALE * TXTRSIZE);
+	while (++i < (int)(MAPSCALE * TXTRSIZE))
 	{
 		j = 0;
-		while (++j < MAPSCALE)
+		while (++j < (int)(MAPSCALE * TXTRSIZE))
 			my_mlx_pixel_put(data, x + j, y + i, color);
 	}
 }
@@ -56,15 +56,15 @@ void	drawplr(t_data *data, t_plr plr, int color)
 	j = 0;
 	xplr = 0;
 	yplr = 0;
-	xplr = plr.x - data->plr_scale / 2;
-	yplr = plr.y - data->plr_scale / 2;
+	xplr = plr.x * MAPSCALE - data->plr_scale / 2;
+	yplr = plr.y * MAPSCALE - data->plr_scale / 2;
 	while (++i <= data->plr_scale)
 	{
 		j = 0;
 		while (++j <= data->plr_scale)
 			my_mlx_pixel_put(data, (int)(xplr + j), (int)(yplr + i), color);
 	}
-	drawddaline(data, plr, color);
+	drawddaplrline(data, plr, color);
 	/*
 	drawddaline(data, plr.x * MAPSCALE, plr.y * MAPSCALE,
 				(plr.x * MAPSCALE) + cosf(plr.diranlgle) * 12, 

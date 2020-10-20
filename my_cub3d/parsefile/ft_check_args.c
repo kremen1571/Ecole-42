@@ -24,7 +24,7 @@ int		ft_check_cubarg(char *str)
 		i++;
 	if (i == 100)
 		ft_error("wrong cub args");
-	if (equals(&str[i + 1], "cub") != 0)
+	if (equals(&str[i + 1], "cub") < 0)
 		ft_error("Wrong cub args");
 	return (0);
 }
@@ -40,7 +40,7 @@ int		ft_check_args(int *argc, char *argv[])
 	{
 		if (ft_check_cubarg(argv[1]))
 			ft_error("Wrong map resolution");
-		if (equals(argv[2], "--save") != 0)
+		if (equals(argv[2], "--save") < 0)
 			ft_error("Wrong --save");
 	}
 	else

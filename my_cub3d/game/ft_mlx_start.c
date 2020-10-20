@@ -15,12 +15,13 @@
 int		drawgame(t_ptr *ptr)
 {
 	wallcolission(ptr);
-	drawminimap(ptr);
+	
 	renderrays(ptr);
+	drawminimap(ptr);
 	drawplr(&ptr->data, ptr->plr, 0xff0000);
-	mlx_put_image_to_window(ptr->data.mlx, ptr->data.win, ptr->data.img, 50, 50);
+	mlx_put_image_to_window(ptr->data.mlx, ptr->data.win, ptr->data.img, 0, 0);
 	mlx_destroy_image(ptr->data.mlx, ptr->data.img);
-	freeimage(ptr);
+	//freeimage(ptr);
 	if (!(ptr->data.img = mlx_new_image(ptr->data.mlx, ptr->cub.x, ptr->cub.y)))
 		ft_error("No image created");
 	return (0);

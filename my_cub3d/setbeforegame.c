@@ -14,8 +14,8 @@
 
 int		setplrpos(t_ptr *ptr)
 {
-	ptr->plr.x = ptr->plr.x * MAPSCALE;
-	ptr->plr.y = ptr->plr.y * MAPSCALE;
+	ptr->plr.x = ptr->plr.x * TXTRSIZE;
+	ptr->plr.y = ptr->plr.y * TXTRSIZE;
 	ptr->wallcolission.newx = ptr->plr.x;
 	ptr->wallcolission.newy = ptr->plr.y;
 	return (0);
@@ -23,23 +23,23 @@ int		setplrpos(t_ptr *ptr)
 
 int		setplrdir(t_ptr *ptr, char c)
 {
-	ptr->plr.turndir = 1;
-	ptr->plr.walkdir = 1;
+	/* ptr->plr.turndir = 1;
+	ptr->plr.walkdir = 1; */
 	if (c == 'E')
 	{
 		ptr->plr.diranlgle = 0;
 	}
 	else if (c == 'N')
 	{
-		ptr->plr.diranlgle = 4.71;
+		ptr->plr.diranlgle = PI * 3 / 2;
 	}
 	else if (c == 'S')
 	{
-		ptr->plr.diranlgle = 1.57;
+		ptr->plr.diranlgle = PI / 2;
 	}
 	else if (c == 'W')
 	{
-		ptr->plr.diranlgle = 3.14;
+		ptr->plr.diranlgle = PI;
 	}
 	return (0);
 }

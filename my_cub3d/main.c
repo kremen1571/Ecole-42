@@ -21,6 +21,10 @@ int	main(int argc, char *argv[])
 	ft_check_args(&argc, argv);
 	ft_parse(argv[1], ptr);
 	//printf("%s", ptr->map.map[10]);
+	
+   //Расчет и вывод результата работы функции tan
+    //printf ("tanf : %f \n", tanf(1.59));
+   //printf ("tan  : %.20f \n", tanf(3.14000001));
 	setbeforestart(ptr);
 	init_game(ptr);
 	ft_mlx_start(ptr);

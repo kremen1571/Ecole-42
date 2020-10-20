@@ -72,8 +72,8 @@ typedef struct	s_cub3d_plr
 	float		diranlgle;
 	float		x;
 	float		y;
-	float		turndir;
-	float		walkdir;
+	/* float		turndir;
+	float		walkdir; */
 }				t_plr;
 
 /*
@@ -95,7 +95,7 @@ typedef struct	s_data
 typedef struct  s_wallcollision
 {
 	int			left;
-	int			wrigth;
+	int			rigth;
 	int			front;
 	int			back;
 	int			opposite;
@@ -116,7 +116,13 @@ typedef struct s_game
 	float		vertiy;
 	int			wallhithorz;
 	int			wallhitvert;
-
+	float		start;
+	int			down;
+	int			up;
+	int			left;
+	int			right;
+	float		wallheight;
+	float		planedistance;
 	
 	int			**image;
 
@@ -141,22 +147,22 @@ typedef struct	s_cub3d_ptr
 	t_wallcolln	wallcolission;
 }				t_ptr;
 
-
+# define PI 3.1415926
 /*
 ** map parameteres
 */
 
-# define MAPSCALE 40
+# define MAPSCALE 0.025
 # define SCRNWIDTH 3200
 # define SCRNHEIGHT 1800
-#define TXTRSIZE 64
+#define TXTRSIZE 256
 /*
 ** plr parameteres
 */
 
 # define FOV 1.15
-# define MOVESPEED 7
-# define ROTATIONSPEED 0.2
+# define MOVESPEED 150
+# define ROTATIONSPEED 0.03
 
 /*
 ** ubuntu buttons
@@ -214,6 +220,8 @@ void			ft_init_cub(t_cub *cub);
 t_ptr			*ft_init_ptr();
 void			ft_init_map(t_ptr *ptr);
 void			ft_fill_map_array(t_ptr *ptr);
+void			initray(t_ray *ray);
+void			initallray(t_ray *ray);
 
 /*
 ** game
@@ -244,7 +252,7 @@ void			wallcollisioninit(t_wallcolln *wallcolission);
 void			wallcolission(t_ptr *ptr);
 
 int				renderrays(t_ptr *ptr);
-void			normilizeangle(t_ptr *ptr);
+void			normilizeangle(float *start);
 void			drawminimap(t_ptr *ptr);
 void			ddrawrectmap(t_data *data, int y, int x, int color);
 void			drawplr(t_data *data, t_plr plr, int color);
@@ -252,6 +260,12 @@ int				keys(int keycode, t_ptr *ptr);
 
 /* int				drawddaline(t_data *data, int x0, int y0, int x1, int y1);
  */
-int				drawddaline(t_data *data, t_plr plr, int color);
+int				drawddaplrline(t_data *data, t_plr plr, int color);
+int				drawddaray(t_data *data, t_plr plr, t_ray ray, int color);
+
+//int				israyup(float start);
+int				israydown(float *start);
+
+int				israyright(float *start);
 
 #endif

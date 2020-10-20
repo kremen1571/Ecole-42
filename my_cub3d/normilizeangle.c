@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-void	normilizeangle(t_ptr *ptr)
+void	normilizeangle(float *start)
 {
-	if (ptr->plr.diranlgle < 0)
-		ptr->plr.diranlgle += 6.28;
-	else if (ptr->plr.diranlgle >= 6.28)
-		ptr->plr.diranlgle -= 6.28;
+	while (*start < 0)
+		*start += 2 * PI;
+	while (*start > 2 * PI)
+		*start -= 2 * PI;
 }

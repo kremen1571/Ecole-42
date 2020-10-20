@@ -42,7 +42,7 @@ int	plroffsetmove(t_ptr *ptr)
 			{
 				moveplrright(ptr);
 				wallcollisioninit(&ptr->wallcolission);
-				ptr->wallcolission.wrigth = 1;
+				ptr->wallcolission.rigth = 1;
 				ptr->wallcolission.opposite = 1;
 			}
 			else if (ptr->wallcolission.opposite == 1)
@@ -87,9 +87,9 @@ int	plroffsetmove(t_ptr *ptr)
 
 int		wall(t_map map, int x, int y)
 {
-	if ((map.map[y / MAPSCALE][x / MAPSCALE]) == '1'
-		|| (map.map[y / MAPSCALE][x / MAPSCALE]) == '2'
-		|| (map.map[y / MAPSCALE][x / MAPSCALE]) == ' ')
+	if ((map.map[y / TXTRSIZE][x / TXTRSIZE]) == '1'
+		|| (map.map[y / TXTRSIZE][x / TXTRSIZE]) == '2'
+		|| (map.map[y / TXTRSIZE][x / TXTRSIZE]) == ' ')
 		return (1);
 	return (0);
 }
@@ -102,7 +102,7 @@ void	wallcolission(t_ptr *ptr)
 		moveplrback(ptr);
 	else if (ptr->wallcolission.left == 1)
 		moveplrleft(ptr);
-	else if (ptr->wallcolission.wrigth == 1)
+	else if (ptr->wallcolission.rigth == 1)
 		moveplrright(ptr);
 		
 	if ((wall(ptr->map, (int)ptr->wallcolission.newx,
@@ -112,7 +112,7 @@ void	wallcolission(t_ptr *ptr)
 		ptr->plr.y = ptr->wallcolission.newy;
 	}
 	/* 
-	** TODO WALLIT X or Y
+	** TODO WALL IT X or Y
 	 */
 	else if ((wall(ptr->map, (int)ptr->wallcolission.newx,
 		(int)ptr->wallcolission.newy)) == 1)
