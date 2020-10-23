@@ -68,5 +68,8 @@ void	ft_check_screenresolution(int *x, int *y)
 		*y = SCRNHEIGHT;
 	}
 	if (*x <= 512 || *y < 288)
-		ft_error("x < 512, y < 288");
+		{
+		*x = 512;
+		*y = 288;
+	}
 }

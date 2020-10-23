@@ -21,26 +21,12 @@ int		whatisquater(float dirangle)
 
 int	plroffsetmove(t_ptr *ptr)
 {
-	/* int quater = -1;
-	quater = whatisquater(ptr->plr.diranlgle); */
-	/* if (ptr->wallcolission.wrigth == 1)
-	{
-		moveplrleft(ptr);
-		ptr->wallcolission.left = 1;
-		wallcolission(ptr);
-	}
-	if (ptr->wallcolission.left == 1)
-	{
-		moveplrleft(ptr);
-		ptr->wallcolission.wrigth = 1;
-		wallcolission(ptr);
-	} */
-
-		/* if (quater != -1)
-		{ */
-			if (ptr->wallcolission.opposite == 0)
+	if (ptr->wallcolission.opposite == 0)
 			{
-				moveplrright(ptr);
+				/* ptr->wallcolission.newx = ptr->plr.x + cosf(1.57 + ptr->plr.diranlgle)
+									* MOVESPEED;
+			ptr->wallcolission.newy = ptr->plr.y + sinf(1.57 + ptr->plr.diranlgle)
+									* MOVESPEED; */
 				wallcollisioninit(&ptr->wallcolission);
 				ptr->wallcolission.rigth = 1;
 				ptr->wallcolission.opposite = 1;
@@ -60,28 +46,6 @@ int	plroffsetmove(t_ptr *ptr)
 				return (0);
 			}
 			wallcolission(ptr);
-	/* 	} */
-		/* else if (quater == 2)
-		{
-			moveplrright(ptr);
-			
-			ptr->wallcolission.wrigth = 1;
-			wallcolission(ptr);
-		}
-		else if (quater == 3)
-		{
-			moveplrleft(ptr);
-			
-			ptr->wallcolission.left = 1;
-			wallcolission(ptr);
-		}
-		else if (quater == 4)
-		{
-			moveplrright(ptr);
-
-			ptr->wallcolission.wrigth = 1;
-			wallcolission(ptr);
-		} */
 	return (0);
 }
 

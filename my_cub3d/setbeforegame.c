@@ -14,8 +14,8 @@
 
 int		setplrpos(t_ptr *ptr)
 {
-	ptr->plr.x = ptr->plr.x * TXTRSIZE;
-	ptr->plr.y = ptr->plr.y * TXTRSIZE;
+	ptr->plr.x = ptr->plr.x * TXTRSIZE + TXTRSIZE / 2;
+	ptr->plr.y = ptr->plr.y * TXTRSIZE + TXTRSIZE / 2;
 	ptr->wallcolission.newx = ptr->plr.x;
 	ptr->wallcolission.newy = ptr->plr.y;
 	return (0);
@@ -31,7 +31,7 @@ int		setplrdir(t_ptr *ptr, char c)
 	}
 	else if (c == 'N')
 	{
-		ptr->plr.diranlgle = PI * 3 / 2;
+		ptr->plr.diranlgle = 3 * PI / 2;
 	}
 	else if (c == 'S')
 	{

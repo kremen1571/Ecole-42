@@ -1,5 +1,17 @@
 #include "cub3d.h"
 
+void	renedertxtonwall(t_ptr *ptr, t_data *txtrdata, int xscreen, int *yscreen)
+{
+	int	xoffset;
+
+	xoffset = 0;
+	if (ptr->ray.wallhithorz == 1)
+		xoffset = (int)floorf(ptr->ray.horix) % TXTRSIZE;
+	else if (ptr->ray.wallhitvert == 1)
+		xoffset = (int)floorf(ptr->ray.vertiy) % TXTRSIZE;
+	my_mlx_pixel_get_put(ptr, txtrdata, xoffset, xscreen, yscreen);
+}
+
 int hexcolor(int r, int g, int b)
 {
     return (r<<16) | (g<<8) | b;
@@ -20,13 +32,19 @@ void		renderwalls(t_ptr *ptr, int x)
 	ptr->ray.distance = ptr->ray.distance * cosf(ptr->ray.start - ptr->plr.diranlgle);
 	ptr->ray.planedistance = (ptr->cub.x / 2) / (tanf(FOV / 2));
 	ptr->ray.wallheight = (TXTRSIZE / ptr->ray.distance) * ptr->ray.planedistance;
+	if (ptr->ray.distance == 0)
+		ptr->ray.wallheight = (TXTRSIZE / 1) * ptr->ray.planedistance;
 	int floorheight = (ptr->cub.y - ptr->ray.wallheight) / 2;
-	if (ptr->ray.wallheight > ptr->cub.y)
+	int	ceilingheight = floorheight;
+	ptr->ray.wallbottom = ptr->cub.y - floorheight;
+	/* if (ptr->ray.wallheight > ptr->cub.y)
 	{
 		while (i++ < ptr->cub.y)
 		{
 			if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
+			{
 				my_mlx_pixel_put(&ptr->data, x, i, 0x9FB3BF);
+			}
 			else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
 				my_mlx_pixel_put(&ptr->data, x, i, 0xA66D3C);
 			else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
@@ -36,14 +54,30 @@ void		renderwalls(t_ptr *ptr, int x)
 		}
 	}
 	else
-	{
-		while (i++ <= floorheight)
+	{ */
+		///////////////////
+		//////render ceiling
+		while (i++ < ceilingheight && i < ptr->cub.y)
 			my_mlx_pixel_put(&ptr->data, x, i, ceilingcolor);
-			i--;
-		while (i++ <= ptr->ray.wallheight + floorheight)
+		//	i--;
+
+		/////////////////////
+		/////render walls
+		if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
+			renedertxtonwall(ptr, &ptr->texture.northdata, x, &i);
+		else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
+			renedertxtonwall(ptr, &ptr->texture.southdata, x, &i);
+		else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
+			renedertxtonwall(ptr, &ptr->texture.westdata, x, &i);
+		else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
+			renedertxtonwall(ptr, &ptr->texture.eastdata, x, &i);
+		//i--;
+		/* while (i++ < ptr->ray.wallheight + floorheight && i <  ptr->cub.y)
 		{
 			if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
+			{
 				my_mlx_pixel_put(&ptr->data, x, i, 0x9FB3BF);
+			}
 			else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
 				my_mlx_pixel_put(&ptr->data, x, i, 0xA66D3C);
 			else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
@@ -51,12 +85,15 @@ void		renderwalls(t_ptr *ptr, int x)
 			else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
 				my_mlx_pixel_put(&ptr->data, x, i, 0x401E27);
 		}
-		i--;
+		i--; */
+
+		///////////////////
+		///////render floor
 		while (i++ < ptr->cub.y)
 			my_mlx_pixel_put(&ptr->data, x, i, floorcolor);
 	}
 
-}
+/* } */
 float roundnow(float var)
 {
     // 37.66666 * 100 = 3766.66
@@ -83,9 +120,11 @@ void	initraydir(t_ray *ray, float start)
 float	finddistace(t_ptr *ptr, float start, float x2, float y2)
 {
 	float	distance;
-	//from plr to wall 
-	//dist between two points
-	//sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+
+	/*
+	* dist between two points
+	* sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+	*/
 	distance = 0;
 	distance = sqrtf(powf(x2 - ptr->plr.x, 2) + powf(y2 - ptr->plr.y, 2));
 	return (distance);
@@ -104,9 +143,7 @@ void	findhrznstep(t_ptr *ptr, t_ray *ray, float start)
 	else
 		ray->fix = ptr->plr.x + (ray->fiy - ptr->plr.y) / tanf(start);
 	ray->ystep = TXTRSIZE;
-	//israyup(start) == 1 ? ray->ystep *= (-1) : 0;
-	if (ray->up == 1)
-		ray->ystep *= -1;
+	ray->ystep *= ray->up == 1 ? -1 : 1;
 	if (start == PI * 3 / 2 || start == PI / 2)
 		ray->xstep = 0;
 	else
@@ -118,26 +155,21 @@ void	findhrznstep(t_ptr *ptr, t_ray *ray, float start)
 }
 float	iswallhithrznt(t_ptr *ptr, t_ray *ray, float start)
 {
-	int hitwall;
 	float tochecky;
 
-	hitwall = 0;
 	tochecky = 0;
 	if (start == 0 || start == PI)
 		return (__FLT_MAX__);
 	findhrznstep(ptr, ray, start);
 	ray->horix = ray->fix;
 	ray->horiy = ray->fiy;	
-	while (!hitwall && ray->horiy > 0 && ray->horix > 0 &&
+	while (ray->horiy > 0 && ray->horix > 0 &&
 			ray->horix < ptr->cub.map_x * TXTRSIZE &&
-			ray->horiy < ptr->cub.map_y * TXTRSIZE) //add window width and height and inc > 0
+			ray->horiy < ptr->cub.map_y * TXTRSIZE)
 	{
-		tochecky = ray->horiy + (ray->up == 1 ? -1 : 0); //check
+		tochecky = ray->horiy + (ray->up == 1 ? -1 : 0);
 		if (ptr->map.map[(int)floorf(tochecky / TXTRSIZE)][(int)floorf(ray->horix / TXTRSIZE)] == '1')
-		{
-			hitwall = 1;
 			return (finddistace(ptr, start, ray->horix, ray->horiy));
-		}
 		ray->horix += ray->xstep;
 		ray->horiy += ray->ystep;
 	}
@@ -157,9 +189,7 @@ void	findvertstep(t_ptr *ptr, t_ray *ray, float start)
 	else
 		ray->fiy = ptr->plr.y + (ray->fix - ptr->plr.x) * tanf(start);
 	ray->xstep = TXTRSIZE;
-	//ray->xstep *= (israyright == 0 ? (-1) : 1);
-	if (ray->left == 1)
-		ray->xstep *= (-1);
+	ray->xstep *= (ray->left == 1 ? (-1) : 1);
 	if (start == 0 || start == PI)
 		ray->ystep = 0;
 	else
@@ -172,27 +202,20 @@ void	findvertstep(t_ptr *ptr, t_ray *ray, float start)
 
 float		iswallhitvert(t_ptr *ptr, t_ray *ray, float start)
 {
-	int		hitwall;
 	float	tocheckx;
 	
-	hitwall = 0;
 	if (start == 3 * PI / 2 || start == PI / 2)
 		return (__FLT_MAX__);
 	findvertstep(ptr, ray, start);
 	ray->vertix = ray->fix;
 	ray->vertiy = ray->fiy;
-	while (!hitwall && ray->vertiy > 0 && ray->vertix > 0
+	while (ray->vertiy > 0 && ray->vertix > 0
 			&& ray->vertix < ptr->cub.map_x * TXTRSIZE
-			&& ray->vertiy < ptr->cub.map_y * TXTRSIZE) //add map width and height 
+			&& ray->vertiy < ptr->cub.map_y * TXTRSIZE)
 	{
 		tocheckx = ray->vertix + (ray->left == 1 ? -1 : 0);
-		/* if (israyright(start) == 0)
-			ray->vertix - 1; */
 		if (ptr->map.map[(int)floorf(ray->vertiy / TXTRSIZE)][(int)floorf(tocheckx / TXTRSIZE)] == '1')
-		{
-			hitwall = 1;
 			return (finddistace(ptr, start, ray->vertix, ray->vertiy));
-		}
 		ray->vertix += ray->xstep;
 		ray->vertiy += ray->ystep;
 	}
@@ -251,8 +274,8 @@ int	renderrays(t_ptr *ptr)
 		normilizeangle(&ptr->ray.start);
 		initraydir(&ptr->ray, ptr->ray.start);
 		castray(ptr);
-		float x = ptr->plr.x * MAPSCALE;
-		float y = ptr->plr.y * MAPSCALE;
+		/* float x = ptr->plr.x * MAPSCALE;
+		float y = ptr->plr.y * MAPSCALE; */
 		/* while (ptr->map.map[(int)(y / (int)(MAPSCALE * TXTRSIZE))][(int)(x / (int)(MAPSCALE * TXTRSIZE))] != '1')
 		{
 			x += cosf(ptr->ray.start);
@@ -262,7 +285,7 @@ int	renderrays(t_ptr *ptr)
 		} */
 		renderwalls(ptr, i);
 		
-		drawddaray(&ptr->data, ptr->plr, ptr->ray, 0xFCD12A);
+		//drawddaray(&ptr->data, ptr->plr, ptr->ray, 0xFCD12A);
 	 	ptr->ray.start += anglestep;
 		initallray(&ptr->ray);
 		i++;

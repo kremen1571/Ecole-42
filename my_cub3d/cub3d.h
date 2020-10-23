@@ -122,18 +122,33 @@ typedef struct s_game
 	int			left;
 	int			right;
 	float		wallheight;
+	float		floorheight;
+	float		wallbottom;
 	float		planedistance;
 	
-	int			**image;
+	//int			**image;
 
 }				t_ray;
 
-typedef struct  s_sprite
+typedef struct  s_texture
 {
 	int			count;
 	int			*distasnce;
 
-}				t_sprite;
+	/* void		*imgnotrth;
+	void		*imgsouth;
+	void		*imgwest;
+	void		*imgeast;
+	void		*imgsprite; */
+	int			img_width;
+	int			img_height;
+	t_data		northdata;
+	t_data		eastdata;
+	t_data		westdata;
+	t_data		southdata;
+	t_data		spritedata;
+
+}				t_texture;
 
 
 typedef struct	s_cub3d_ptr
@@ -145,6 +160,7 @@ typedef struct	s_cub3d_ptr
 	t_ray		ray;
 	t_data		data;
 	t_wallcolln	wallcolission;
+	t_texture	texture;
 }				t_ptr;
 
 # define PI 3.1415926
@@ -152,17 +168,17 @@ typedef struct	s_cub3d_ptr
 ** map parameteres
 */
 
-# define MAPSCALE 0.025
 # define SCRNWIDTH 3200
 # define SCRNHEIGHT 1800
 #define TXTRSIZE 256
+# define MAPSCALE 0.05
 /*
 ** plr parameteres
 */
 
 # define FOV 1.15
 # define MOVESPEED 150
-# define ROTATIONSPEED 0.03
+# define ROTATIONSPEED 0.05
 
 /*
 ** ubuntu buttons
@@ -267,5 +283,12 @@ int				drawddaray(t_data *data, t_plr plr, t_ray ray, int color);
 int				israydown(float *start);
 
 int				israyright(float *start);
+
+/* 
+**	textures
+ */
+
+int				mlx_get_textures(t_ptr *ptr);
+void			my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata, int xoffset, int xscreen, int *yscreen);
 
 #endif

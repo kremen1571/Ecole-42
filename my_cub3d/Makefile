@@ -17,7 +17,7 @@ parsefile/ft_prsmap.c parsefile/ft_check2.c parsefile/ft_check_args.c utils/gnl/
 utils/gnl/get_next_line_utils.c ft_free.c parsefile/ft_check3.c parsefile/ft_check4.c game/ft_mlx_start.c\
 utils/ft_str_equals.c ft_close.c ft_draw_dda_line.c setbeforegame.c\
 draw.c keys.c plr_moves.c my_mlx_pixelput.c rays.c wallcollision.c normilizeangle.c\
-initgame.c
+initgame.c textures.c 
 
 LIBFT = utils/libft/libft.a
 OBJ = $(SRC:.c=.o)

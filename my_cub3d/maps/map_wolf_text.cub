@@ -1,10 +1,11 @@
-R 3200 1800
+R 3200 1800 
 
-NO /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/cub textures 276_276/north.xpm
-SO /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/cub textures 276_276/south.xpm
-WE /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/cub textures 276_276/west.xpm
-EA /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/cub textures 276_276/east.xpm
-  S /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/cub textures 276_276/sprite.xpm
+NO /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/textures/banner.xpm
+SO /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/textures/brick.xpm
+WE /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/textures/eagle.xpm
+EA /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/textures/grey.xpm
+S /home/kremen/Downloads/21/MAIN/Ecole-42/my_cub3d/textures/barrel.xpm
+
 
 F   124    ,    166,        146 
 C 164   ,     166,        152
@@ -14,8 +15,8 @@ C 164   ,     166,        152
 
         111111111111111111111111111111111111
         100000000110000000000000000000000001
-        10110000111000000000011111111111111
-        1111000200000000000S000000000000000111
+        10110000111000000000001111111111111
+        111100020000000W0000000000000000000111
         10010000000000000000000000000000001
 11111111101100000000000000000000000000000001
 1000000000110000000000000000000000000111111111111
