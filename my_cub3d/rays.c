@@ -1,6 +1,84 @@
 #include "cub3d.h"
 
-void	renedertxtonwall(t_ptr *ptr, t_data *txtrdata, int xscreen, int *yscreen)
+void fillspritesarray(t_sprite *sprite)
+{
+	sprite->bottom = 0;
+	sprite->color = 0;
+	sprite->distance = 0;
+	sprite->hordistance = 0;
+	sprite->horhit = 0;
+	sprite->horx = 0;
+	sprite->hory = 0;
+	sprite->number = 0;
+	sprite->spriteheight = 0;
+	sprite->topoffset = 0;
+	sprite->vertdist = 0;
+	sprite->verthit = 0;
+	sprite->vertx = 0;
+	sprite->verty = 0;
+	sprite->visible = 0;
+	sprite->xonmap = 0;
+	sprite->yonamp = 0;
+	
+}
+
+void init1zbuff(t_ptr *ptr)
+{
+	int	i;
+
+	i = 0;
+	if (!(ptr->texture.zbuffer = (float *)malloc(sizeof(float) * ptr->cub.x)))
+		ft_error("1z error");
+	while (i++ < ptr->cub.x)
+		ptr->texture.zbuffer[i] = 0;
+}
+
+void	initspritearray(t_ptr *ptr)
+{
+	int i = 0;
+	int j = 0;
+	int spritenum = 0;
+
+	while (i < ptr->cub.map_y)
+	{
+		j = 0;
+		while (j < ptr->cub.map_x)
+		{
+			if (ptr->map.map[i][j] == '2')
+				spritenum++;
+				j++;
+		}
+		i++;
+	}
+	if (!(ptr->sprite = (t_sprite *)malloc(sizeof(t_sprite) * spritenum)))
+		ft_error("pizda to sprites");
+	ptr->texture.count = spritenum;
+	while (--spritenum >= 0)
+		fillspritesarray(&ptr->sprite[spritenum]);
+	i = 0;
+	j = 0;
+	spritenum = 0;
+
+	while (i < ptr->cub.map_y)
+	{
+		j = 0;
+		while (j < ptr->cub.map_x)
+		{
+			if (ptr->map.map[i][j] == '2')
+			{
+				ptr->sprite[spritenum].xonmap = j;
+				ptr->sprite[spritenum].yonamp = i;
+				ptr->sprite[spritenum].number = spritenum;
+				spritenum++;
+			}
+				j++;
+		}
+		i++;
+	}
+}
+
+
+void	txtroffsetrender(t_ptr *ptr, t_data *txtrdata, int xscreen, int *yscreen)
 {
 	int	xoffset;
 
@@ -37,63 +115,27 @@ void		renderwalls(t_ptr *ptr, int x)
 	int floorheight = (ptr->cub.y - ptr->ray.wallheight) / 2;
 	int	ceilingheight = floorheight;
 	ptr->ray.wallbottom = ptr->cub.y - floorheight;
-	/* if (ptr->ray.wallheight > ptr->cub.y)
-	{
-		while (i++ < ptr->cub.y)
-		{
-			if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
-			{
-				my_mlx_pixel_put(&ptr->data, x, i, 0x9FB3BF);
-			}
-			else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0xA66D3C);
-			else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0x8C8074);
-			else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0x401E27);
-		}
-	}
-	else
-	{ */
-		///////////////////
-		//////render ceiling
-		while (i++ < ceilingheight && i < ptr->cub.y)
-			my_mlx_pixel_put(&ptr->data, x, i, ceilingcolor);
-		//	i--;
+	///////////////////
+	//////render ceiling
+	while (i++ < ceilingheight && i < ptr->cub.y)
+		my_mlx_pixel_put(&ptr->data, x, i, ceilingcolor);
+	//	i--;
+	/////////////////////
+	/////render walls
+	if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
+		txtroffsetrender(ptr, &ptr->texture.northdata, x, &i);
+	else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
+		txtroffsetrender(ptr, &ptr->texture.southdata, x, &i);
+	else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
+		txtroffsetrender(ptr, &ptr->texture.westdata, x, &i);
+	else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
+		txtroffsetrender(ptr, &ptr->texture.eastdata, x, &i);
+	///////////////////
+	///////render floor
+	while (i++ < ptr->cub.y)
+		my_mlx_pixel_put(&ptr->data, x, i, floorcolor);
+}
 
-		/////////////////////
-		/////render walls
-		if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
-			renedertxtonwall(ptr, &ptr->texture.northdata, x, &i);
-		else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
-			renedertxtonwall(ptr, &ptr->texture.southdata, x, &i);
-		else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
-			renedertxtonwall(ptr, &ptr->texture.westdata, x, &i);
-		else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
-			renedertxtonwall(ptr, &ptr->texture.eastdata, x, &i);
-		//i--;
-		/* while (i++ < ptr->ray.wallheight + floorheight && i <  ptr->cub.y)
-		{
-			if (ptr->ray.wallhithorz == 1 && ptr->ray.up == 1)
-			{
-				my_mlx_pixel_put(&ptr->data, x, i, 0x9FB3BF);
-			}
-			else if (ptr->ray.wallhithorz == 1 && ptr->ray.down == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0xA66D3C);
-			else if (ptr->ray.wallhitvert == 1 && ptr->ray.left == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0x8C8074);
-			else if (ptr->ray.wallhitvert == 1 && ptr->ray.right == 1)
-				my_mlx_pixel_put(&ptr->data, x, i, 0x401E27);
-		}
-		i--; */
-
-		///////////////////
-		///////render floor
-		while (i++ < ptr->cub.y)
-			my_mlx_pixel_put(&ptr->data, x, i, floorcolor);
-	}
-
-/* } */
 float roundnow(float var)
 {
     // 37.66666 * 100 = 3766.66
@@ -104,9 +146,9 @@ float roundnow(float var)
 
     // затем делим на 100, поэтому значение преобразуется в 37,67
 
-    float value = (int)(var * 100 + 0.5);
+	float value = (int)(var * 100 + 0.5);
 
-    return (float)(value) / 100;
+	return (float)(value) / 100;
 
 } 
 void	initraydir(t_ray *ray, float start)
@@ -117,7 +159,7 @@ void	initraydir(t_ray *ray, float start)
     ray->left = !ray->right;
 }
 
-float	finddistace(t_ptr *ptr, float start, float x2, float y2)
+float	finddistace(t_ptr *ptr, float x2, float y2)
 {
 	float	distance;
 
@@ -158,8 +200,8 @@ float	iswallhithrznt(t_ptr *ptr, t_ray *ray, float start)
 	float tochecky;
 
 	tochecky = 0;
-	if (start == 0 || start == PI)
-		return (__FLT_MAX__);
+	/* if (start == 0 || start == PI)
+		return (__FLT_MAX__); */
 	findhrznstep(ptr, ray, start);
 	ray->horix = ray->fix;
 	ray->horiy = ray->fiy;	
@@ -168,8 +210,13 @@ float	iswallhithrznt(t_ptr *ptr, t_ray *ray, float start)
 			ray->horiy < ptr->cub.map_y * TXTRSIZE)
 	{
 		tochecky = ray->horiy + (ray->up == 1 ? -1 : 0);
+		////////////////////
+		///sprite
+		if (ptr->map.map[(int)floorf(tochecky / TXTRSIZE)][(int)floorf(ray->horix / TXTRSIZE)] == '2')
+			spritehorzn(ptr,(int)floorf(ray->horix / TXTRSIZE), (int)floorf(tochecky / TXTRSIZE), &ptr->texture.count);
+		///////////////////////
 		if (ptr->map.map[(int)floorf(tochecky / TXTRSIZE)][(int)floorf(ray->horix / TXTRSIZE)] == '1')
-			return (finddistace(ptr, start, ray->horix, ray->horiy));
+			return (finddistace(ptr, ray->horix, ray->horiy));
 		ray->horix += ray->xstep;
 		ray->horiy += ray->ystep;
 	}
@@ -204,8 +251,8 @@ float		iswallhitvert(t_ptr *ptr, t_ray *ray, float start)
 {
 	float	tocheckx;
 	
-	if (start == 3 * PI / 2 || start == PI / 2)
-		return (__FLT_MAX__);
+	/* if (start == 3 * PI / 2 || start == PI / 2)
+		return (__FLT_MAX__); */
 	findvertstep(ptr, ray, start);
 	ray->vertix = ray->fix;
 	ray->vertiy = ray->fiy;
@@ -214,8 +261,15 @@ float		iswallhitvert(t_ptr *ptr, t_ray *ray, float start)
 			&& ray->vertiy < ptr->cub.map_y * TXTRSIZE)
 	{
 		tocheckx = ray->vertix + (ray->left == 1 ? -1 : 0);
+		////////////////////
+		///sprite
+
+		if (ptr->map.map[(int)floorf(ray->vertiy / TXTRSIZE)][(int)floorf(tocheckx / TXTRSIZE)] == '2')
+			spritevert(ptr, (int)floorf(tocheckx / TXTRSIZE), (int)floorf(ray->vertiy / TXTRSIZE), &ptr->texture.count);
+		///////////////////////
 		if (ptr->map.map[(int)floorf(ray->vertiy / TXTRSIZE)][(int)floorf(tocheckx / TXTRSIZE)] == '1')
-			return (finddistace(ptr, start, ray->vertix, ray->vertiy));
+			return (finddistace(ptr, ray->vertix, ray->vertiy));
+		
 		ray->vertix += ray->xstep;
 		ray->vertiy += ray->ystep;
 	}
@@ -237,10 +291,28 @@ int	castray(t_ptr *ptr)
 	ptr->ray.wallhithorz = 0;
 	ptr->ray.wallhitvert = 0;
 	initray(&ptr->ray);
-	distancehrznt = iswallhithrznt(ptr, &ptr->ray, ptr->ray.start);
-	initray(&ptr->ray);
-	distancevert = iswallhitvert(ptr, &ptr->ray, ptr->ray.start);
-	
+	//////////////////////
+	/////////spritecount
+	ptr->texture.count = 0;
+	///////////
+	if (ptr->ray.start == 0 || ptr->ray.start == PI)
+		{
+			distancehrznt = __FLT_MAX__;
+			ptr->sprite[ptr->texture.count].hordistance = __FLT_MAX__;
+		}
+	else
+	{
+		distancehrznt = iswallhithrznt(ptr, &ptr->ray, ptr->ray.start);
+		initray(&ptr->ray);
+	}
+	if (ptr->ray.start == 3 * PI / 2 || ptr->ray.start == PI / 2)
+		{
+			distancevert = (__FLT_MAX__);
+			ptr->sprite[ptr->texture.count].vertdist = __FLT_MAX__;
+		}
+	else{
+		distancevert = iswallhitvert(ptr, &ptr->ray, ptr->ray.start);
+	}
 	if (distancehrznt < distancevert)
 	{
 		ptr->ray.distance = distancehrznt;
@@ -251,7 +323,6 @@ int	castray(t_ptr *ptr)
 		ptr->ray.distance = distancevert;
 		ptr->ray.wallhitvert = 1;
 	}
-	iswallhitsprite(ptr, ptr->ray.start);
 	return (0);
 }
 
@@ -269,26 +340,23 @@ int	renderrays(t_ptr *ptr)
 	ptr->ray.start = (ptr->plr.diranlgle - FOV / 2.0);
 	numrays = ptr->cub.x;
 	anglestep = FOV / numrays;
+	//init sprite array
+	initspritearray(ptr);
+	init1zbuff(ptr);
 	while (i < ptr->cub.x)
 	{
 		normilizeangle(&ptr->ray.start);
 		initraydir(&ptr->ray, ptr->ray.start);
 		castray(ptr);
-		/* float x = ptr->plr.x * MAPSCALE;
-		float y = ptr->plr.y * MAPSCALE; */
-		/* while (ptr->map.map[(int)(y / (int)(MAPSCALE * TXTRSIZE))][(int)(x / (int)(MAPSCALE * TXTRSIZE))] != '1')
-		{
-			x += cosf(ptr->ray.start);
-			y += sinf(ptr->ray.start);
-			my_mlx_pixel_put(&ptr->data, (int)(x), (int)(y), 0xFCD12A);
-			ptr->ray.start+=anglestep;
-		} */
+		ptr->texture.zbuffer[i] = ptr->ray.distance;
 		renderwalls(ptr, i);
-		
-		//drawddaray(&ptr->data, ptr->plr, ptr->ray, 0xFCD12A);
+		drawddaray(&ptr->data, ptr->plr, ptr->ray, 0xFCD12A);
 	 	ptr->ray.start += anglestep;
 		initallray(&ptr->ray);
 		i++;
 	}
+	rendersprite(ptr);
+	free(ptr->texture.zbuffer);
+	free(ptr->sprite);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void	freeimage(t_ptr *ptr)
+/* void	freeimage(t_ptr *ptr)
 {
 	int	i;
 	int	j;
@@ -25,7 +25,7 @@ void	freeimage(t_ptr *ptr)
 		i++;
 	}
 	free(ptr->ray.image);
-}
+} */
 
 void	ft_free(t_ptr *ptr)
 {

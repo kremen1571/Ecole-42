@@ -18,6 +18,18 @@ int		whatisquater(float dirangle)
 		return (4);
 	return (-1);
 }
+int	moveplrleftcol (t_ptr *ptr)
+{
+	ptr->wallcolission.newx = ptr->plr.x - 3;
+	ptr->wallcolission.newy = ptr->plr.y + 3;
+	return (0);
+}
+int	moveplrrightcol(t_ptr *ptr)
+{
+	ptr->wallcolission.newx = ptr->plr.x - 3;
+	ptr->wallcolission.newy = ptr->plr.y - 3;
+	return (0);
+}
 
 int	plroffsetmove(t_ptr *ptr)
 {
@@ -28,20 +40,21 @@ int	plroffsetmove(t_ptr *ptr)
 			ptr->wallcolission.newy = ptr->plr.y + sinf(1.57 + ptr->plr.diranlgle)
 									* MOVESPEED; */
 				wallcollisioninit(&ptr->wallcolission);
-				ptr->wallcolission.rigth = 1;
+				//ptr->wallcolission.rigth = 1;
+				moveplrleftcol(ptr);
 				ptr->wallcolission.opposite = 1;
 			}
 			else if (ptr->wallcolission.opposite == 1)
 			{
-				turnplrwallcol(ptr);
-				moveplrleft(ptr);
+				//turnplrwallcol(ptr);
+				moveplrleftcol(ptr);
 				wallcollisioninit(&ptr->wallcolission);
 				ptr->wallcolission.left = 1;
 				ptr->wallcolission.opposite = 2;
 			}
 			else if (ptr->wallcolission.opposite == 2)
 			{
-				turnplrleft(ptr);
+				//turnplrleft(ptr);
 				wallcollisioninit(&ptr->wallcolission);
 				return (0);
 			}
@@ -51,11 +64,28 @@ int	plroffsetmove(t_ptr *ptr)
 
 int		wall(t_map map, int x, int y)
 {
-	if ((map.map[y / TXTRSIZE][x / TXTRSIZE]) == '1'
-		|| (map.map[y / TXTRSIZE][x / TXTRSIZE]) == '2'
-		|| (map.map[y / TXTRSIZE][x / TXTRSIZE]) == ' ')
+	if ((map.map[(y + 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == '1'
+		|| (map.map[(y + 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == '2'
+		|| (map.map[(y + 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == ' '
+		&& (map.map[(y - 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == '1'
+		|| (map.map[(y - 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == '2'
+		|| (map.map[(y - 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == ' '
+		&& (map.map[(y + 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == '1'
+		|| (map.map[(y + 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == '2'
+		|| (map.map[(y + 2) / TXTRSIZE][(x - 2) / TXTRSIZE]) == ' '
+		&& (map.map[(y - 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == '1'
+		|| (map.map[(y - 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == '2'
+		|| (map.map[(y - 2) / TXTRSIZE][(x + 2) / TXTRSIZE]) == ' ')
 		return (1);
 	return (0);
+}
+int	isBlocking(t_map map, int x, int y)
+{
+	if ((map.map[y / TXTRSIZE][x / TXTRSIZE]) == '1'
+		|| (map.map[(y) / TXTRSIZE][(x) / TXTRSIZE]) == '2'
+		|| (map.map[(y) / TXTRSIZE][(x) / TXTRSIZE]) == ' ')
+		return (0);
+	return (1);
 }
 
 void	wallcolission(t_ptr *ptr)
@@ -81,7 +111,8 @@ void	wallcolission(t_ptr *ptr)
 	else if ((wall(ptr->map, (int)ptr->wallcolission.newx,
 		(int)ptr->wallcolission.newy)) == 1)
 	{
-		plroffsetmove(ptr);
+	plroffsetmove(ptr);
 	}
 	wallcollisioninit(&ptr->wallcolission);
+	
 }

@@ -32,6 +32,12 @@ int		init_game(t_ptr *ptr)
 {
 	if (!(ptr->data.mlx = mlx_init()))
 		ft_error("No init");
+	mlx_get_screen_size(ptr->data.mlx, &ptr->cub.screenx, &ptr->cub.screeny);
+	if (ptr->cub.x > ptr->cub.screenx || ptr->cub.y > ptr->cub.screeny)
+	{
+		ptr->cub.x = ptr->cub.screenx;
+		ptr->cub.y = ptr->cub.screeny;
+	}
 	if (!(ptr->data.win = mlx_new_window(ptr->data.mlx, ptr->cub.x, ptr->cub.y, "cub3D")))
 		ft_error("No window");
 	if (!(ptr->data.img = mlx_new_image(ptr->data.mlx, ptr->cub.x, ptr->cub.y)))
@@ -42,8 +48,10 @@ int		init_game(t_ptr *ptr)
 
 void	ft_mlx_start(t_ptr *ptr)
 {
+	mlx_do_sync(ptr->data.mlx);
 	mlx_hook(ptr->data.win, 17, 1L << 17, close_win, (void *)0);
 	mlx_hook(ptr->data.win, 2, 1L << 0, keys, ptr);
 	mlx_loop_hook(ptr->data.mlx, drawgame, ptr);
+	
 	mlx_loop(ptr->data.mlx);
 }

@@ -62,11 +62,6 @@ int		ft_check_prmtrs(char *line)
 
 void	ft_check_screenresolution(int *x, int *y)
 {
-	if (*x > SCRNWIDTH || *y > SCRNHEIGHT)
-	{
-		*x = SCRNWIDTH;
-		*y = SCRNHEIGHT;
-	}
 	if (*x <= 512 || *y < 288)
 		{
 		*x = 512;
