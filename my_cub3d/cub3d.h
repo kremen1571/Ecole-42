@@ -92,7 +92,7 @@ typedef struct	s_data
 	int			plr_scale;
 }				t_data;
 
-typedef struct  s_wallcollision
+typedef struct	s_wallcollision
 {
 	int			left;
 	int			rigth;
@@ -103,7 +103,7 @@ typedef struct  s_wallcollision
 	float		newy;
 }				t_wallcolln;
 
-typedef struct s_game
+typedef struct	s_game
 {
 	float		distance;
 	float		fiy;
@@ -125,14 +125,11 @@ typedef struct s_game
 	float		floorheight;
 	float		wallbottom;
 	float		planedistance;
-	
-	//int			**image;
-
 }				t_ray;
 
-typedef struct  s_texture
+typedef struct	s_texture
 {
-	int			count;
+	int			spritecount;
 	float		*zbuffer;
 	int			img_width;
 	int			img_height;
@@ -143,28 +140,19 @@ typedef struct  s_texture
 	t_data		spritedata;
 }				t_texture;
 
-typedef struct s_sprite
+typedef struct	s_sprite
 {
 	int			number;
-	float		vertx;
-	float		verty;
-	float		horx;
-	float		hory;
-	float		vertdist;
-	float		hordistance;
+	int			drawnum;
 	float		distance;
-	int			horhit;
-	int			verthit;
 	float		spriteheight;
 	float		topoffset;
 	float		bottom;
-	unsigned int	color;
 	int			visible;
 	int			xonmap;
 	int			yonamp;
-;
+	float		xscreen;
 }				t_sprite;
-
 
 typedef struct	s_cub3d_ptr
 {
@@ -180,21 +168,23 @@ typedef struct	s_cub3d_ptr
 }				t_ptr;
 
 # define PI 3.1415926
+
 /*
 ** map parameteres
 */
 
 # define SCRNWIDTH 3200
 # define SCRNHEIGHT 1800
-#define TXTRSIZE 256
+# define TXTRSIZE 256
 # define MAPSCALE 0.05
+
 /*
 ** plr parameteres
 */
 
 # define FOV 1.15
 # define MOVESPEED 120
-# define ROTATIONSPEED 0.01
+# define ROTATIONSPEED 0.05
 
 /*
 ** ubuntu buttons
@@ -209,6 +199,7 @@ typedef struct	s_cub3d_ptr
 # define RIGHT_ARROW 0xff53
 # define UP_ARROW 0xff52
 # define DOWN_ARROW 0xff54
+
 /*
 ** utils
 */
@@ -236,7 +227,6 @@ void			ft_check_screenresolution(int *x, int *y);
 
 int				ft_parse(char *str, t_ptr *ptr);
 void			prsmap(char *line, t_list *map);
-//void	check_topmapline(char *line, t_list *map);
 void			ft_check_map_line(char *line);
 void			ft_addtomapline(char *line, char **map, int *ermap, t_cub *cub);
 void			ft_check_map(t_ptr *ptr);
@@ -254,6 +244,9 @@ void			ft_init_map(t_ptr *ptr);
 void			ft_fill_map_array(t_ptr *ptr);
 void			initray(t_ray *ray);
 void			initallray(t_ray *ray);
+void			initspritearray(t_ptr *ptr);
+void			init1zbuff(t_ptr *ptr);
+void			fillspritesarray(t_sprite *sprite);
 
 /*
 ** game
@@ -290,29 +283,29 @@ void			ddrawrectmap(t_data *data, int y, int x, int color);
 void			drawplr(t_data *data, t_plr plr, int color);
 int				keys(int keycode, t_ptr *ptr);
 
-/* int				drawddaline(t_data *data, int x0, int y0, int x1, int y1);
- */
+/*
+** int				drawddaline(t_data *data, int x0, int y0, int x1, int y1);
+*/
+
 int				drawddaplrline(t_data *data, t_plr plr, int color);
 int				drawddaray(t_data *data, t_plr plr, t_ray ray, int color);
-
-//int				israyup(float start);
 int				israydown(float *start);
-
 int				israyright(float *start);
 
-/* 
-**	textures
- */
+/*
+** textures
+*/
 
 int				mlx_get_textures(t_ptr *ptr);
-void			my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata, int xoffset, int xscreen, int *yscreen);
-
-void	spriteoffset(t_ptr *ptr, t_data *txtrdata, int xscreen, int yscreen);
-void	spritehorzn(t_ptr *ptr, float horix, float horiy, int *count);
-void	spritevert(t_ptr *ptr, float vertx, float verty, int *count);
-float	finddistace(t_ptr *ptr, float x2, float y2);
-void	spritehorzn(t_ptr *ptr, float horix, float horiy, int *count);
-void	spritevert(t_ptr *ptr, float vertx, float verty, int *count);
-void	rendersprite(t_ptr *ptr);
-void	my_mlx_pixel_get_put_sprite(t_ptr *ptr, t_data *txtrdata, int xoffset, int xscreen, int yscreen);
+void			my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata, int xoffset,
+									int xscreen, int *yscreen);
+void			spriteoffset(t_ptr *ptr, int xscreen, int yscreen);
+void			spritehorzn(t_ptr *ptr, float horix, float horiy, int *count);
+void			spritevert(t_ptr *ptr, float vertx, float verty, int *count);
+float			finddistace(t_ptr *ptr, float x2, float y2);
+void			spritehorzn(t_ptr *ptr, float horix, float horiy, int *count);
+void			spritevert(t_ptr *ptr, float vertx, float verty, int *count);
+void			rendersprite(t_ptr *ptr);
+void			my_mlx_pixel_get_put_sprite(t_ptr *ptr, int xoffset,
+											int xscreen, int yscreen);
 #endif

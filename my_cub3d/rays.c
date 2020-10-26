@@ -1,28 +1,19 @@
 #include "cub3d.h"
 
-void fillspritesarray(t_sprite *sprite)
+void	fillspritesarray(t_sprite *sprite)
 {
 	sprite->bottom = 0;
-	sprite->color = 0;
 	sprite->distance = 0;
-	sprite->hordistance = 0;
-	sprite->horhit = 0;
-	sprite->horx = 0;
-	sprite->hory = 0;
 	sprite->number = 0;
 	sprite->spriteheight = 0;
 	sprite->topoffset = 0;
-	sprite->vertdist = 0;
-	sprite->verthit = 0;
-	sprite->vertx = 0;
-	sprite->verty = 0;
 	sprite->visible = 0;
 	sprite->xonmap = 0;
 	sprite->yonamp = 0;
 	
 }
 
-void init1zbuff(t_ptr *ptr)
+void	init1zbuff(t_ptr *ptr)
 {
 	int	i;
 
@@ -52,13 +43,12 @@ void	initspritearray(t_ptr *ptr)
 	}
 	if (!(ptr->sprite = (t_sprite *)malloc(sizeof(t_sprite) * spritenum)))
 		ft_error("pizda to sprites");
-	ptr->texture.count = spritenum;
+	ptr->texture.spritecount = spritenum;
 	while (--spritenum >= 0)
 		fillspritesarray(&ptr->sprite[spritenum]);
 	i = 0;
 	j = 0;
 	spritenum = 0;
-
 	while (i < ptr->cub.map_y)
 	{
 		j = 0;
@@ -213,7 +203,7 @@ float	iswallhithrznt(t_ptr *ptr, t_ray *ray, float start)
 		////////////////////
 		///sprite
 		if (ptr->map.map[(int)floorf(tochecky / TXTRSIZE)][(int)floorf(ray->horix / TXTRSIZE)] == '2')
-			spritehorzn(ptr,(int)floorf(ray->horix / TXTRSIZE), (int)floorf(tochecky / TXTRSIZE), &ptr->texture.count);
+			spritehorzn(ptr,(int)floorf(ray->horix / TXTRSIZE), (int)floorf(tochecky / TXTRSIZE), &ptr->texture.spritecount);
 		///////////////////////
 		if (ptr->map.map[(int)floorf(tochecky / TXTRSIZE)][(int)floorf(ray->horix / TXTRSIZE)] == '1')
 			return (finddistace(ptr, ray->horix, ray->horiy));
@@ -265,7 +255,7 @@ float		iswallhitvert(t_ptr *ptr, t_ray *ray, float start)
 		///sprite
 
 		if (ptr->map.map[(int)floorf(ray->vertiy / TXTRSIZE)][(int)floorf(tocheckx / TXTRSIZE)] == '2')
-			spritevert(ptr, (int)floorf(tocheckx / TXTRSIZE), (int)floorf(ray->vertiy / TXTRSIZE), &ptr->texture.count);
+			spritevert(ptr, (int)floorf(tocheckx / TXTRSIZE), (int)floorf(ray->vertiy / TXTRSIZE), &ptr->texture.spritecount);
 		///////////////////////
 		if (ptr->map.map[(int)floorf(ray->vertiy / TXTRSIZE)][(int)floorf(tocheckx / TXTRSIZE)] == '1')
 			return (finddistace(ptr, ray->vertix, ray->vertiy));
@@ -293,12 +283,12 @@ int	castray(t_ptr *ptr)
 	initray(&ptr->ray);
 	//////////////////////
 	/////////spritecount
-	ptr->texture.count = 0;
+	//ptr->texture.count = 0;
 	///////////
 	if (ptr->ray.start == 0 || ptr->ray.start == PI)
 		{
 			distancehrznt = __FLT_MAX__;
-			ptr->sprite[ptr->texture.count].hordistance = __FLT_MAX__;
+			//ptr->sprite[ptr->texture.count].hordistance = __FLT_MAX__;
 		}
 	else
 	{
@@ -308,7 +298,7 @@ int	castray(t_ptr *ptr)
 	if (ptr->ray.start == 3 * PI / 2 || ptr->ray.start == PI / 2)
 		{
 			distancevert = (__FLT_MAX__);
-			ptr->sprite[ptr->texture.count].vertdist = __FLT_MAX__;
+			//ptr->sprite[ptr->texture.count].vertdist = __FLT_MAX__;
 		}
 	else{
 		distancevert = iswallhitvert(ptr, &ptr->ray, ptr->ray.start);
@@ -340,7 +330,6 @@ int	renderrays(t_ptr *ptr)
 	ptr->ray.start = (ptr->plr.diranlgle - FOV / 2.0);
 	numrays = ptr->cub.x;
 	anglestep = FOV / numrays;
-	//init sprite array
 	initspritearray(ptr);
 	init1zbuff(ptr);
 	while (i < ptr->cub.x)

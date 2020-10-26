@@ -66,23 +66,29 @@ void	my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata, int xoffset, int xscreen
 /////////////////////////////
 	////////my_mlx_pixel_get for spirte
 	////////////////////////
-void	my_mlx_pixel_get_put_sprite(t_ptr *ptr, t_data *txtrdata, int xoffset, int xscreen, int yscreen)
+void	my_mlx_pixel_get_put_sprite(t_ptr *ptr, int xoffset, int number, int yscreen)
 {
 	int	yoffset;
-	int j;
+	int	j;
+	int	xscreen;
+	unsigned int color;
+	t_data *txtrdata;
 
 	yoffset = 0;
+	xscreen = 0;
+	xscreen = ptr->sprite[number].xscreen;
+	txtrdata = &ptr->texture.spritedata;
 	j = (yscreen);
-	while (j < ptr->sprite[ptr->texture.count].bottom && j < ptr->cub.y)
+	while (j < ptr->sprite[number].bottom && j < ptr->cub.y)
 	{
-		int distanceFromTop = j + (ptr->sprite[ptr->texture.count].spriteheight / 2) - ((ptr->cub.y) / 2);
-		yoffset = (distanceFromTop * ((float)TXTRSIZE / ptr->sprite[ptr->texture.count].spriteheight));
+		int distanceFromTop = j + (ptr->sprite[number].spriteheight / 2) - ((ptr->cub.y) / 2);
+		yoffset = (distanceFromTop * ((float)TXTRSIZE / ptr->sprite[number].spriteheight));
 		char *dst = txtrdata->addr + ((yoffset * txtrdata->line_length)
 					+ xoffset * (txtrdata->bits_per_pixel / 8));
-		ptr->sprite[0].color = *(unsigned int *)dst;
+		color = *(unsigned int *)dst;
 		(yscreen) = j;
 		j++;
-		if (ptr->sprite[0].color < 0xFFFFFFFF && ptr->sprite[0].color > 0)
-			my_mlx_pixel_put(&ptr->data, xscreen, yscreen, ptr->sprite[0].color);
+		if (color < 0xFFFFFFFF && color > 0)
+			my_mlx_pixel_put(&ptr->data, xscreen, yscreen, color);
 	}
 }

@@ -27,7 +27,7 @@ int	moveplrleftcol (t_ptr *ptr)
 int	moveplrrightcol(t_ptr *ptr)
 {
 	ptr->wallcolission.newx = ptr->plr.x - 3;
-	ptr->wallcolission.newy = ptr->plr.y - 3;
+	ptr->wallcolission.newy = ptr->plr.y + 3;
 	return (0);
 }
 
@@ -47,7 +47,7 @@ int	plroffsetmove(t_ptr *ptr)
 			else if (ptr->wallcolission.opposite == 1)
 			{
 				//turnplrwallcol(ptr);
-				moveplrleftcol(ptr);
+				moveplrrightcol(ptr);
 				wallcollisioninit(&ptr->wallcolission);
 				ptr->wallcolission.left = 1;
 				ptr->wallcolission.opposite = 2;
