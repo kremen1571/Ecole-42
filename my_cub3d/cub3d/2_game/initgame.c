@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   initgame.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/28 02:12:17 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 02:12:19 by klaronda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
-void			initallray(t_ray *ray)
+void	initallray(t_ray *ray)
 {
 	ray->fix = 0;
 	ray->fiy = 0;
@@ -17,4 +29,20 @@ void			initallray(t_ray *ray)
 	ray->right = -1;
 	ray->up = -1;
 	ray->down = -1;
+}
+
+void	initddaline(t_plr *dda)
+{
+	dda->line.cx = 0;
+	dda->line.cy = 0;
+	dda->line.dx = 0;
+	dda->line.dy = 0;
+	dda->line.i = 0;
+	dda->line.sidelength = 0;
+	dda->line.x0 = 0;
+	dda->line.x1 = 0;
+	dda->line.y0 = 0;
+	dda->line.y1 = 0;
+	dda->line.x_inc = 0;
+	dda->line.y_inc = 0;
 }

@@ -136,4 +136,3 @@ int		get_next_line(int fd, char **line)
 	x = (rd == 0) ? 0 : -1;
 	return (x);
 }
-

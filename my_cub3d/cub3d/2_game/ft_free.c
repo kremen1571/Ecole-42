@@ -12,21 +12,6 @@
 
 #include "../cub3d.h"
 
-/* void	freeimage(t_ptr *ptr)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while(i < ptr->cub.y)
-	{
-		free(ptr->ray.image[i]);
-		i++;
-	}
-	free(ptr->ray.image);
-} */
-
 void	ft_free(t_ptr *ptr)
 {
 	free(ptr->cub.map);
@@ -38,5 +23,14 @@ void	ft_free(t_ptr *ptr)
 	while (ptr->cub.map_y > 0)
 		free(ptr->map.map[--ptr->cub.map_y]);
 	free(ptr->map.map);
+	free(ptr->texture.zbuffer);
+	free(ptr->texture.eastdata.img);
+	free(ptr->texture.northdata.img);
+	free(ptr->texture.southdata.img);
+	free(ptr->texture.westdata.img);
+	free(ptr->texture.spritedata.img);
+	free(ptr->sprite);
+	mlx_destroy_image(ptr->data.mlx, ptr->data.img);
+	mlx_destroy_window(ptr->data.mlx, ptr->data.win);
 	free(ptr);
 }

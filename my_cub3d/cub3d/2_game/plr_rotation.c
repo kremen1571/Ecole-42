@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_equals.c                                        :+:      :+:    :+:   */
+/*   plr_rotation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/02 13:47:10 by klaronda          #+#    #+#             */
-/*   Updated: 2020/09/02 13:47:11 by klaronda         ###   ########.fr       */
+/*   Created: 2020/10/28 02:14:13 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 02:14:37 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	equals(char *str1, char *str2)
+int	turnplrleft(t_ptr *ptr)
 {
-	int	i;
-	int	s1;
-	int	s2;
+	ptr->plr.diranlgle -= ROTATIONSPEED;
+	return (0);
+}
 
-	i = 0;
-	s1 = ft_strlen(str1);
-	s2 = ft_strlen(str2);
-	if (s1 != s2)
-		return (-1);
-	while (i < s1)
-	{
-		if (str1[i] != str2[i])
-			return (-1);
-		i++;
-	}
-	return (1);
+int	turnplrright(t_ptr *ptr)
+{
+	ptr->plr.diranlgle += ROTATIONSPEED;
+	return (0);
 }

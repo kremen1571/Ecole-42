@@ -92,5 +92,5 @@ void	createbmp(t_ptr *ptr)
 	close(fd);
 	free(bmpheader);
 	mlx_destroy_window(ptr->data.mlx, ptr->data.win);
-	close_win();
+	close_win(ptr);
 }

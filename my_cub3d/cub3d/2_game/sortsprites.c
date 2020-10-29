@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normilizeangle.c                                   :+:      :+:    :+:   */
+/*   sortsprites.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 02:13:25 by klaronda          #+#    #+#             */
-/*   Updated: 2020/10/28 02:13:26 by klaronda         ###   ########.fr       */
+/*   Created: 2020/10/28 01:38:10 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 01:38:39 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	normilizeangle(float *start)
+void	sortsprites(t_sprite *sprite, int spritecount)
 {
-	while (*start < 0)
-		*start += 2 * PI;
-	while (*start > 2 * PI)
-		*start -= 2 * PI;
-}
+	int			i;
+	int			j;
+	int			max;
+	t_sprite	temp;
 
-float	finddistace(t_ptr *ptr, float x2, float y2)
-{
-	float	distance;
-
-	distance = 0;
-	distance = sqrtf(powf(x2 - ptr->plr.x, 2) + powf(y2 - ptr->plr.y, 2));
-	return (distance);
-}
-
-int		hexcolor(int r, int g, int b)
-{
-	return ((r << 16) | (g << 8) | b);
+	i = -1;
+	j = 0;
+	while (i++ < spritecount - 1)
+	{
+		max = i;
+		if (sprite[i].visible == 1)
+		{
+			j = i + 1;
+			while (j < spritecount)
+			{
+				if (sprite[j].visible == 1
+					&& sprite[max].distance < sprite[j].distance)
+					max = j;
+				j++;
+			}
+			temp = sprite[max];
+			sprite[max] = sprite[i];
+			sprite[i] = temp;
+		}
+	}
 }

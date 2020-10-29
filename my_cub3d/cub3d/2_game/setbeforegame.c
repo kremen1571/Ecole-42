@@ -49,6 +49,8 @@ int		setbeforestart(t_ptr *ptr, int argc)
 	c = ptr->plr.dir;
 	setplrdir(ptr, c);
 	setplrpos(ptr);
+	initspritearray(ptr);
+	init1zbuff(ptr);
 	ptr->cub.argc = argc;
 	return (0);
 }

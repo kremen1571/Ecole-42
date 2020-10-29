@@ -1,5 +1,4 @@
-R 2000   355
-
+R 3200 1800
 
 NO ./cub textures 256_256/north.xpm
 SO ./cub textures 256_256/south.xpm

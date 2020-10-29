@@ -6,7 +6,7 @@ LIBFT = 4_utils/libft/libft.a
 INC=%%%%
 INCLIB=$(INC)/../lib
 
-CC = gcc
+CC = clang
 
 FLAGS = -O3 -Wall -Wextra -Werror
 LFLAGS = -L./mlx_Linux/ -lmlx -L$(INCLIB) -lXext -lX11 -lm -lbsd
@@ -20,9 +20,12 @@ SRC_PARSE = 1_parsefile/ft_parse.c 1_parsefile/ft_error.c  1_parsefile/ft_check.
 SRC_GAME = 2_game/draw.c 2_game/ft_mlx_start.c 2_game/ft_close.c 2_game/ft_draw_dda_line.c\
 2_game/setbeforegame.c 2_game/keys.c 2_game/plr_moves.c 2_game/my_mlx_pixelput.c\
 2_game/rays.c 2_game/wallcollision.c 2_game/normilizeangle.c\
-2_game/initgame.c 2_game/textures.c 2_game/drawsprite.c 2_game/ft_intit.c 2_game/ft_free.c\
+2_game/initgame.c 2_game/textures.c 2_game/drawsprite.c 2_game/ft_init.c 2_game/ft_init2.c\
+2_game/ft_free.c 2_game/sortsprites.c 2_game/plr_rotation.c 2_game/wallcollision2.c\
+2_game/texture2.c 2_game/initspritesarray.c 2_game/rayhits.c 2_game/raydistance.c
 
 SRC_BMP = 3_bmp/createbmp.c
+
 SRC_UTILS = 4_utils/gnl/get_next_line.c 4_utils/gnl/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o) $(SRC_PARSE:.c=.o) $(SRC_GAME:.c=.o) $(SRC_BMP:.c=.o) $(SRC_UTILS:.c=.o)
@@ -34,9 +37,10 @@ $(NAME)	:$(OBJ)
 	@cd 4_utils/libft/	&&	$(MAKE)
 	@cd mlx_Linux/ && $(MAKE)
 	@$(CC) -g -o $(NAME) $(FLAGS) $(OBJ) $(LIBFT) $(CFLAGS) $(LFLAGS)
+	
 debug:	all	$(OBJ) $(HDRS)
 
-	@$(CC) -g $(SRC) $(LIBFT) $(CFLAGS) $(LFLAGS)
+	@$(CC) -g $(SRC) $(SRC_BMP) $(SRC_GAME) $(SRC_PARSE) $(SRC_UTILS) $(LIBFT) $(CFLAGS) $(LFLAGS)
 
 cleandebug:
 
@@ -56,3 +60,6 @@ fclean: clean cleandebug
 reclean: clean all
 
 re:	fclean all
+
+leeks:
+	valgrind -v --leak-check=full --show-leak-kinds=all  --track-origins=yes ./cub3D maps/map_subject_example.cub

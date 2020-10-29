@@ -12,72 +12,56 @@
 
 #include "../cub3d.h"
 
-/* int		drawddaline(t_data *data, int x0, int y0, int x1, int y1) */
 int		drawddaplrline(t_data *data, t_plr plr, int color)
 {
-	int x0 =  plr.x * MAPSCALE;
-	int y0 = plr.y * MAPSCALE;
-	int x1 = (plr.x * MAPSCALE) + cosf(plr.diranlgle) * 10;
-	int y1 = (plr.y * MAPSCALE) + sinf(plr.diranlgle) * 10;
-	int		sidelength;
-	float	x_inc;
-	float	y_inc;
-	int		i;
-	float dx = (x1 - x0);
-	float dy = (y1 - y0);
-	i = 0;
-	sidelength = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
-	x_inc = dx / (float)sidelength;
-	y_inc = dy / (float)sidelength;
-	float cx = x0;
-	float cy = y0;
-	while (i++ < sidelength)
+	initddaline(&plr);
+	plr.line.x0 = plr.x * MAPSCALE;
+	plr.line.y0 = plr.y * MAPSCALE;
+	plr.line.x1 = (plr.x * MAPSCALE) + cosf(plr.diranlgle) * 10;
+	plr.line.y1 = (plr.y * MAPSCALE) + sinf(plr.diranlgle) * 10;
+	plr.line.dx = (plr.line.x1 - plr.line.x0);
+	plr.line.dy = (plr.line.y1 - plr.line.y0);
+	plr.line.i = 0;
+	plr.line.sidelength = fabs(plr.line.dx)
+	> fabs(plr.line.dy) ? fabs(plr.line.dx) : fabs(plr.line.dy);
+	plr.line.x_inc = plr.line.dx / (float)plr.line.sidelength;
+	plr.line.y_inc = plr.line.dy / (float)plr.line.sidelength;
+	plr.line.cx = plr.line.x0;
+	plr.line.cy = plr.line.y0;
+	while (plr.line.i++ < plr.line.sidelength)
 	{
-		my_mlx_pixel_put(data, roundf(cx), roundf(cy), color);
-		cx += x_inc;
-		cy += y_inc;
+		my_mlx_pixel_put(data, roundf(plr.line.cx), roundf(plr.line.cy), color);
+		plr.line.cx += plr.line.x_inc;
+		plr.line.cy += plr.line.y_inc;
 	}
 	return (0);
 }
 
-int		drawddaray(t_data *data, t_plr plr, t_ray ray, int color)
+void	drawddaray(t_data *data, t_plr plr, t_ray ray, int color)
 {
-	int x0 =  (int)(plr.x * MAPSCALE);
-	int y0 = (int)(plr.y * MAPSCALE);
-	/* float x1 = (ray.wallhithorz == 1) ? ray.horix * MAPSCALE : ray.vertix * MAPSCALE;
-	float y1 = (ray.wallhithorz == 1) ? ray.horiy * MAPSCALE : ray.vertiy * MAPSCALE; */
-	
-	int x1;
-	int y1;
-
-	 if (ray.wallhitvert == 1)
-		x1 = (int)(ray.vertix * MAPSCALE); 
-	else
-		x1 = (int)(ray.horix  * MAPSCALE);
-
+	initddaline(&plr);
+	plr.line.x0 = (int)(plr.x * MAPSCALE);
+	plr.line.y0 = (int)(plr.y * MAPSCALE);
 	if (ray.wallhitvert == 1)
-		y1 = (int)(ray.vertiy  * MAPSCALE);
+		plr.line.x1 = (int)(ray.vertix * MAPSCALE);
 	else
-		y1 = (int)(ray.horiy * MAPSCALE);
-	
-	int	sidelength;
-	float	x_inc;
-	float	y_inc;
-	int		i;
-	int dx = (x1 - x0);
-	int dy = (y1 - y0);
-	i = 0;
-	sidelength = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	x_inc = dx / (float)sidelength;
-	y_inc = dy / (float)sidelength;
-	float cx = x0;
-	float cy = y0;
-	while (i < sidelength)
+		plr.line.x1 = (int)(ray.horix * MAPSCALE);
+	if (ray.wallhitvert == 1)
+		plr.line.y1 = (int)(ray.vertiy * MAPSCALE);
+	else
+		plr.line.y1 = (int)(ray.horiy * MAPSCALE);
+	plr.line.dx = (plr.line.x1 - plr.line.x0);
+	plr.line.dy = (plr.line.y1 - plr.line.y0);
+	plr.line.sidelength = fabs(plr.line.dx)
+	> fabs(plr.line.dy) ? fabs(plr.line.dx) : fabs(plr.line.dy);
+	plr.line.x_inc = plr.line.dx / (float)plr.line.sidelength;
+	plr.line.y_inc = plr.line.dy / (float)plr.line.sidelength;
+	plr.line.cx = plr.line.x0;
+	plr.line.cy = plr.line.y0;
+	while (plr.line.i++ < plr.line.sidelength)
 	{
-		my_mlx_pixel_put(data, (int)(cx), (int)(cy), color);
-		cx += x_inc;
-		cy += y_inc;
-		i++;
+		my_mlx_pixel_put(data, (int)(plr.line.cx), (int)(plr.line.cy), color);
+		plr.line.cx += plr.line.x_inc;
+		plr.line.cy += plr.line.y_inc;
 	}
-	return (0);
 }

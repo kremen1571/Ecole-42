@@ -1,4 +1,16 @@
-# include "../cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/10/28 01:27:15 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 01:27:18 by klaronda         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../cub3d.h"
 
 void	drawrectmap(t_data *data, int y, int x, int color)
 {
@@ -59,8 +71,8 @@ void	drawplr(t_data *data, t_plr plr, int color)
 	j = 0;
 	xplr = 0;
 	yplr = 0;
-	xplr =  (int)roundf(plr.x * MAPSCALE) - data->plr_scale / 2;
-	yplr =  (int)roundf(plr.y * MAPSCALE) - data->plr_scale / 2;
+	xplr = (int)roundf(plr.x * MAPSCALE) - data->plr_scale / 2;
+	yplr = (int)roundf(plr.y * MAPSCALE) - data->plr_scale / 2;
 	while (++i <= data->plr_scale)
 	{
 		j = 0;
@@ -68,9 +80,4 @@ void	drawplr(t_data *data, t_plr plr, int color)
 			my_mlx_pixel_put(data, (xplr + j), (yplr + i), color);
 	}
 	drawddaplrline(data, plr, color);
-	/*
-	drawddaline(data, plr.x * MAPSCALE, plr.y * MAPSCALE,
-				(plr.x * MAPSCALE) + cosf(plr.diranlgle) * 12, 
-				plr.y * MAPSCALE + sinf(plr.diranlgle) * 12);
-	*/
 }

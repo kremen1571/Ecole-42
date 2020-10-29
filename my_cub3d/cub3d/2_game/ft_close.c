@@ -12,8 +12,9 @@
 
 #include "../cub3d.h"
 
-int	close_win(void)
+int	close_win(t_ptr *ptr)
 {
+	ft_free(ptr);
 	exit(EXIT_SUCCESS);
 	return (0);
 }

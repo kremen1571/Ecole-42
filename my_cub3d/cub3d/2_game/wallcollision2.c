@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normilizeangle.c                                   :+:      :+:    :+:   */
+/*   wallcollision2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 02:13:25 by klaronda          #+#    #+#             */
-/*   Updated: 2020/10/28 02:13:26 by klaronda         ###   ########.fr       */
+/*   Created: 2020/10/28 02:49:16 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 02:49:41 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	normilizeangle(float *start)
+int		moveplrleftcol(t_ptr *ptr)
 {
-	while (*start < 0)
-		*start += 2 * PI;
-	while (*start > 2 * PI)
-		*start -= 2 * PI;
+	ptr->wallcolission.newx = ptr->plr.x - 3;
+	ptr->wallcolission.newy = ptr->plr.y + 3;
+	return (0);
 }
 
-float	finddistace(t_ptr *ptr, float x2, float y2)
+int		moveplrrightcol(t_ptr *ptr)
 {
-	float	distance;
-
-	distance = 0;
-	distance = sqrtf(powf(x2 - ptr->plr.x, 2) + powf(y2 - ptr->plr.y, 2));
-	return (distance);
-}
-
-int		hexcolor(int r, int g, int b)
-{
-	return ((r << 16) | (g << 8) | b);
+	ptr->wallcolission.newx = ptr->plr.x - 3;
+	ptr->wallcolission.newy = ptr->plr.y + 3;
+	return (0);
 }

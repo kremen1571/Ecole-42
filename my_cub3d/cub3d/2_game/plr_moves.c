@@ -12,27 +12,10 @@
 
 #include "../cub3d.h"
 
-int	turnplrleft(t_ptr *ptr)
-{
-	ptr->plr.diranlgle -= ROTATIONSPEED;
-	return (0);
-}
-
-int	turnplrright(t_ptr *ptr)
-{
-	ptr->plr.diranlgle += ROTATIONSPEED;
-	return (0);
-}
-
 int	moveplrforvard(t_ptr *ptr)
 {
 	ptr->wallcolission.newx = ptr->plr.x + cosf(ptr->plr.diranlgle) * MOVESPEED;
 	ptr->wallcolission.newy = ptr->plr.y + sinf(ptr->plr.diranlgle) * MOVESPEED;
-	
-	/* else {
-		ptr->plr.x += cosf(1.57 + ptr->plr.diranlgle) * MOVESPEED * (-1);
-		ptr->plr.y += sinf(1.57 + ptr->plr.diranlgle) * MOVESPEED * (-1);
-	} */
 	return (0);
 }
 

@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_intit.c                                         :+:      :+:    :+:   */
+/*   init2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: klaronda <klaronda@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/09 12:58:15 by klaronda          #+#    #+#             */
-/*   Updated: 2020/09/09 12:58:24 by klaronda         ###   ########.fr       */
+/*   Created: 2020/10/28 01:45:41 by klaronda          #+#    #+#             */
+/*   Updated: 2020/10/28 01:45:44 by klaronda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-void	initray(t_ray *ray)
-{
-	ray->fix = 0;
-	ray->fiy = 0;
-	ray->xstep = 0;
-	ray->ystep = 0;
-}
-
-void	wallcollisioninit(t_wallcolln *wallcolission)
-{
-	/* wallcolission->newx = 0;
-	wallcolission->newy = 0; */
-	wallcolission->back = 0;
-	wallcolission->front = 0;
-	wallcolission->left = 0;
-	wallcolission->rigth = 0;
-	wallcolission->opposite = 0;
-}
 
 void	ft_fill_map_array(t_ptr *ptr)
 {
@@ -39,7 +20,6 @@ void	ft_fill_map_array(t_ptr *ptr)
 
 	i = 0;
 	j = 0;
-	x = 0;
 	while (i < ptr->cub.map_y)
 	{
 		x = 0;
@@ -77,33 +57,4 @@ void	ft_init_map(t_ptr *ptr)
 		i++;
 	}
 	ft_fill_map_array(ptr);
-}
-
-t_ptr	*ft_init_ptr(void)
-{
-	t_ptr	*ptr;
-
-	if (!(ptr = (t_ptr *)malloc(sizeof(t_ptr))))
-		ft_error("slomalos");
-	ptr->cub.map_x = 0;
-	ptr->cub.map_y = 0;
-	wallcollisioninit(&ptr->wallcolission);
-	//ptr->data.map_scale = MAPSCALE;
-	ptr->data.plr_scale = 4;
-	ptr->plr.diranlgle = 0;
-	ptr->ray.wallhithorz = 0;
-	ptr->ray.wallhitvert = 0;
-	/* ptr->data.linecolor = 0x00FF00;
-	ptr->data.plrcolor = 0x800080;
-	ptr->data.raycolor = 0xFCD12A; */
-	return (ptr);
-}
-
-void	ft_init_cub(t_cub *cub)
-{
-	cub->ea = NULL;
-	cub->we = NULL;
-	cub->s = NULL;
-	cub->so = NULL;
-	cub->no = NULL;
 }

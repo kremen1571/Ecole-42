@@ -117,12 +117,14 @@ int	ft_parse(char *str, t_ptr *ptr)
 	line = NULL;
 	i = 0;
 	i1 = 0;
+	fd = -1;
 	if (!(fd = open(str, O_RDONLY)))
 		ft_error("File Open Error");
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
 		ft_parse_element(line, &ptr->cub, &ptr->map_erorr, i1);
 		free(line);
+		line = NULL;
 	}
 	ft_parse_element(line, &ptr->cub, &ptr->map_erorr, i1);
 	free(line);

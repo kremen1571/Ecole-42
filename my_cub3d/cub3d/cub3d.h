@@ -33,8 +33,7 @@
 ** map parameteres
 */
 
-# define SCRNWIDTH 3200
-# define SCRNHEIGHT 1800
+
 # define TXTRSIZE 256
 # define MAPSCALE 0.05
 
@@ -43,8 +42,8 @@
 */
 
 # define FOV 1.15
-# define MOVESPEED 120
-# define ROTATIONSPEED 0.05
+# define MOVESPEED 80
+# define ROTATIONSPEED 0.1
 
 /*
 ** ubuntu buttons
@@ -59,6 +58,7 @@
 # define RIGHT_ARROW 0xff53
 # define UP_ARROW 0xff52
 # define DOWN_ARROW 0xff54
+
 /*
 ** map struct
 */
@@ -103,12 +103,29 @@ typedef struct	s_cub3d_map
 
 }				t_map;
 
+typedef struct s_ddaline
+{
+	int		x0;
+	int		y0;
+	int		x1;
+	int		y1;
+	int		sidelength;
+	float	x_inc;
+	float	y_inc;
+	int		i;
+	float	dx;
+	float	dy;
+	float	cx;
+	float	cy;
+}				t_ddaline;
+
 typedef struct	s_cub3d_plr
 {
 	char		dir;
 	float		diranlgle;
 	float		x;
 	float		y;
+	t_ddaline	line;
 }				t_plr;
 
 /*
@@ -160,11 +177,14 @@ typedef struct	s_game
 	float		floorheight;
 	float		wallbottom;
 	float		planedistance;
+	int			xoffset;
 }				t_ray;
 
 typedef struct	s_texture
 {
 	int			spritecount;
+	int			floorcolor;
+	int			ceilingcolor;
 	float		*zbuffer;
 	int			img_width;
 	int			img_height;
@@ -241,7 +261,6 @@ void			ft_check_horisntmap(char **map, int y, int x);
 */
 
 void			ft_init_cub(t_cub *cub);
-t_ptr			*ft_init_ptr();
 t_ptr			*ft_init_ptr(void);
 void			ft_init_map(t_ptr *ptr);
 void			ft_fill_map_array(t_ptr *ptr);
@@ -249,7 +268,11 @@ void			initray(t_ray *ray);
 void			initallray(t_ray *ray);
 void			initspritearray(t_ptr *ptr);
 void			init1zbuff(t_ptr *ptr);
+void			fillzbuff(t_ptr *ptr);
+void			setpritearray(t_ptr *ptr);
 void			fillspritesarray(t_sprite *sprite);
+void			initddaline(t_plr *dda);
+
 
 /*
 ** game
@@ -264,7 +287,7 @@ void			ft_free(t_ptr *ptr);
 ** game
 */
 int				init_game(t_ptr *ptr);
-int				close_win(void);
+int				close_win(t_ptr *ptr);
 int				setbeforestart(t_ptr *ptr, int argc);
 int				setplrdir(t_ptr *ptr, char c);
 
@@ -291,7 +314,7 @@ int				keys(int keycode, t_ptr *ptr);
 */
 
 int				drawddaplrline(t_data *data, t_plr plr, int color);
-int				drawddaray(t_data *data, t_plr plr, t_ray ray, int color);
+void			drawddaray(t_data *data, t_plr plr, t_ray ray, int color);
 int				israydown(float *start);
 int				israyright(float *start);
 
@@ -299,8 +322,8 @@ int				israyright(float *start);
 ** textures
 */
 
-int				mlx_get_textures(t_ptr *ptr);
-void			my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata, int xoffset,
+void			mlx_get_textures(t_ptr *ptr);
+void			my_mlx_pixel_get_put(t_ptr *ptr, t_data *txtrdata,
 									int xscreen, int *yscreen);
 void			spriteoffset(t_ptr *ptr, int xscreen, int yscreen);
 void			spritehorzn(t_ptr *ptr, float horix, float horiy, int *count);
@@ -311,6 +334,20 @@ void			spritevert(t_ptr *ptr, float vertx, float verty, int *count);
 void			rendersprite(t_ptr *ptr);
 void			my_mlx_pixel_get_put_sprite(t_ptr *ptr, int xoffset,
 											int xscreen, int yscreen);
+void			sortsprites(t_sprite *sprite, int spritecount);
+void			gettxtraddr(t_texture *texture);
+void			init1zbuff(t_ptr *ptr);
+void			initspritearray(t_ptr *ptr);
+void			fillspritesarray(t_sprite *sprite);
 void			createbmp(t_ptr *ptr);
-
+int				moveplrleftcol(t_ptr *ptr);
+int				moveplrrightcol(t_ptr *ptr);
+float			iswallhithrznt(t_ptr *ptr, t_ray *ray, float start);
+float			iswallhitvert(t_ptr *ptr, t_ray *ray, float start);
+float			finddistace(t_ptr *ptr, float x2, float y2);
+int				hexcolor(int r, int g, int b);
+void			initraydir(t_ray *ray, float start);
+int				fillraydistance(t_ray *ray, float *distancehrznt, float *distancevert);
+void			getfloorcolor(t_ptr *ptr);
+void			getraydistance(t_ptr *ptr);
 #endif
