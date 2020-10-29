@@ -30,15 +30,6 @@ void	setpritearray(t_ptr *ptr)
 	}
 }
 
-void	fillzbuff(t_ptr *ptr)
-{
-	int	i;
-
-	i = -1;
-	while (++i < ptr->cub.x)
-		ptr->texture.zbuffer[i] = 0;
-}
-
 void	fillspritesarray(t_sprite *sprite)
 {
 	sprite->bottom = 0;
@@ -108,12 +99,4 @@ void	initspritearray(t_ptr *ptr)
 		i++;
 	}
 	memoryspritesarray(ptr, spritenum);
-}
-
-void	initraydir(t_ray *ray, float start)
-{
-	ray->down = start > 0 && start < PI;
-	ray->up = !ray->down;
-	ray->right = start < (PI / 2) || start > (3 * PI / 2);
-	ray->left = !ray->right;
 }

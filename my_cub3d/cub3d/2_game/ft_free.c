@@ -30,7 +30,9 @@ void	ft_free(t_ptr *ptr)
 	free(ptr->texture.westdata.img);
 	free(ptr->texture.spritedata.img);
 	free(ptr->sprite);
-	mlx_destroy_image(ptr->data.mlx, ptr->data.img);
-	mlx_destroy_window(ptr->data.mlx, ptr->data.win);
+	if (ptr->data.mlx && ptr->data.img)
+		mlx_destroy_image(ptr->data.mlx, ptr->data.img);
+	if (ptr->data.mlx && ptr->data.win)
+			mlx_destroy_window(ptr->data.mlx, ptr->data.win);
 	free(ptr);
 }

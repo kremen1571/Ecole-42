@@ -92,7 +92,7 @@ void	wallcolission(t_ptr *ptr)
 	else if ((wall(ptr->map, (int)ptr->wallcolission.newx,
 		(int)ptr->wallcolission.newy)) == 1)
 	{
-		plroffsetmove(ptr);
+		//plroffsetmove(ptr);
 	}
 	wallcollisioninit(&ptr->wallcolission);
 }

@@ -46,3 +46,12 @@ void	initddaline(t_plr *dda)
 	dda->line.x_inc = 0;
 	dda->line.y_inc = 0;
 }
+
+void	fillzbuff(t_ptr *ptr)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ptr->cub.x)
+		ptr->texture.zbuffer[i] = 0;
+}

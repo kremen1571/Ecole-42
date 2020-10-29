@@ -33,7 +33,6 @@
 ** map parameteres
 */
 
-
 # define TXTRSIZE 256
 # define MAPSCALE 0.05
 
@@ -103,7 +102,7 @@ typedef struct	s_cub3d_map
 
 }				t_map;
 
-typedef struct s_ddaline
+typedef struct	s_ddaline
 {
 	int		x0;
 	int		y0;
@@ -272,7 +271,10 @@ void			fillzbuff(t_ptr *ptr);
 void			setpritearray(t_ptr *ptr);
 void			fillspritesarray(t_sprite *sprite);
 void			initddaline(t_plr *dda);
-
+void			initmap(t_ptr *ptr);
+void			initrayfirst(t_ptr *ptr);
+void			initsprite(t_ptr *ptr);
+void			initplr(t_ptr *ptr);
 
 /*
 ** game
@@ -347,7 +349,8 @@ float			iswallhitvert(t_ptr *ptr, t_ray *ray, float start);
 float			finddistace(t_ptr *ptr, float x2, float y2);
 int				hexcolor(int r, int g, int b);
 void			initraydir(t_ray *ray, float start);
-int				fillraydistance(t_ray *ray, float *distancehrznt, float *distancevert);
+int				fillraydistance(t_ray *ray, float *distancehrznt,
+								float *distancevert);
 void			getfloorcolor(t_ptr *ptr);
 void			getraydistance(t_ptr *ptr);
 #endif
