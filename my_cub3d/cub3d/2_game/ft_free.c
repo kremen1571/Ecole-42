@@ -33,6 +33,6 @@ void	ft_free(t_ptr *ptr)
 	if (ptr->data.mlx && ptr->data.img)
 		mlx_destroy_image(ptr->data.mlx, ptr->data.img);
 	if (ptr->data.mlx && ptr->data.win)
-			mlx_destroy_window(ptr->data.mlx, ptr->data.win);
+		mlx_destroy_window(ptr->data.mlx, ptr->data.win);
 	free(ptr);
 }

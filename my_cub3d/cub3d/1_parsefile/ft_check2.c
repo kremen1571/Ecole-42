@@ -62,6 +62,10 @@ int		ft_check_prmtrs(char *line)
 
 void	ft_check_screenresolution(int *x, int *y)
 {
+	if (*x == 0)
+		*x = 1;
+	if (*y == 0)
+		*y = 1;
 	if (*x / *y >= 7)
 		*y = *x / 7;
 	if ((*x <= 512 || *y <= 288))
