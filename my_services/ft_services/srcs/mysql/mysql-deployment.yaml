@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: mysql
+    tier: mysql
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-vol
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: "/mnt/mysql"
+    type: DirectoryOrCreate
+  claimRef:
+    name: mysql-pvc
+    namespace: default
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql
+        imagePullPolicy: Never
+        name: mysql
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-vol
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-vol
+        persistentVolumeClaim:
+          claimName: mysql-pvc

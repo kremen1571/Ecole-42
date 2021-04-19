@@ -1,0 +1,12 @@
+Check whether eofbit is set
+Returns true if the eofbit error state flag is set for the stream.
+
+This flag is set by all standard input operations when the End-of-File
+is reached in the sequence associated with the stream.
+
+Note that the value returned by this function depends on the last operation  	
+performed on the stream (and not on the next).
+
+Operations that attempt to read at the End-of-File fail, and thus both the eofbit 
+and the failbit end up set. This function can be used to check whether the failure is
+ due to reaching the End-of-File or to some other reason.			 

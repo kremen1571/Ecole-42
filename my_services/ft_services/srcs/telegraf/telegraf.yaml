@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf
+spec:
+  selector:
+    matchLabels:
+      app: telegraf
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: telegraf
+    spec:
+      containers:
+      - image: telegraf
+        name: telegraf
+        imagePullPolicy: Never
+        volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+      volumes:
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+          type: Socket

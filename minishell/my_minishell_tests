@@ -1,0 +1,16 @@
+ls -la 
+ls -la | grep main
+ls -la | grep m | grep main
+ls -la | grep m | grep main > 1; cat 1; rm 1
+> 1 | > 2
+ls -la > 1 | ls -la > 2
+ls -la | grep main | ls -la | grep main
+ls -la | grep main > 1 > 2 | ls -la | grep m | grep main > 3 >> 4 |ls -la | grep user > 1 | ls -la | grep main | grep c > 2 ; cat 1; cat 2; rm 1 2
+grep main 1
+wc 1
+wc < 1 
+wc < 1 1 1 1 
+wc < 1 1 1 1 > 1
+ls>1|wc
+ls>1|grep main|grep m > 2
+ls>1|grep main|grep m |wc

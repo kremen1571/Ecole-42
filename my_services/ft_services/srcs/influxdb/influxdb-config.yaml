@@ -1,0 +1,64 @@
+apiVersion: v1
+
+kind: ConfigMap
+metadata:
+  name: influxdb
+data:
+  influxdb.conf: |+
+    [meta]
+      dir = "/var/lib/influxdb/meta"
+      retention-autocreate = true
+      logging-enabled = true
+
+    [data]
+      dir = "/var/lib/influxdb/data"
+      index-version = "inmem"
+      wal-dir = "/var/lib/influxdb/wal"
+      wal-fsync-delay = "0s"
+      query-log-enabled = true
+      trace-logging-enabled = true
+
+    [coordinator]
+      write-timeout = "10s"
+      max-concurrent-queries = 0
+      query-timeout = "0s"
+      log-queries-after = "0s"
+      max-select-point = 0
+      max-select-series = 0
+      max-select-buckets = 0
+
+    [shard-precreation]
+      enabled = true
+      check-interval = "10m0s"
+      advance-period = "30m0s"
+
+    [monitor]
+      store-enabled = true
+      store-database = "_internal"
+      store-interval = "10s"
+
+    [subscriber]
+      enabled = false
+      http-timeout = "30s"
+      insecure-skip-verify = false
+      ca-certs = ""
+      write-concurrency = 40
+      write-buffer-size = 1000
+
+    [http]
+      auth-enabled = false
+      log-enabled = true
+      suppress-write-log = false
+      write-tracing = false
+      pprof-enabled = true
+    
+    [[graphite]]
+      database = "telegraf"
+      retention-policy = ""
+      protocol = "tcp"
+      batch-size = 5000
+      batch-pending = 10
+      batch-timeout = "1s"
+      consistency-level = "one"
+      separator = "."
+      udp-read-buffer = 0
